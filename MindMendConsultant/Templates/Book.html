@@ -18,13 +18,14 @@
             <a href="#"><img src="images/clinic.png"></a>
         </div>
         <ul class="nav-link">
-            <li class="link"><a href="#">Home</li>
-            <li class="link"><a href="#">Facilities</a></li>
+            <li class="link"><a href="{% url 'index' %}">Home</a></li>
+            <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
+            <li class="link"><a href="/">Profile</a></li>
             <li class="link"><a href="service.html">Service</a></li>
             <li class="link"><a href="#">About</a></li>
             <li class="link"><a href="#">Reviews</a></li>
         </ul>
-        <button class="btn btn-login">Login</button>
+    <a href="{% url 'auth' %}"><button class="btn btn-login">login</button></a>
     </nav>
 
 

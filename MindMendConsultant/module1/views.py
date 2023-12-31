@@ -1,8 +1,11 @@
 # views.py
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 from module1.models import Patient, Therapist, Sessions
 
@@ -106,3 +109,30 @@ def login_view(request):
             messages.error(request, 'Invalid login credentials.')
 
     return redirect('/')
+
+def register_patient(request):
+    if request.method == 'POST':
+        # Extract form data
+        username = request.POST['username']
+        email = request.POST['email']
+        gender = request.POST['gender']
+        dob_str = request.POST['dob']
+        dob = datetime.strptime(dob_str, '%Y-%m-%d').date()
+        age = request.POST['age']
+        phone_no = request.POST['phone_no']
+        print(f'Extracted Date: {dob}')
+        password = request.POST['password']
+
+
+        # Create a User
+        user = User.objects.create_user(username=username, email=email, password=password)
+        print(user.username,user.email,user.password)
+        # Create a Patient
+        patient = Patient(user=user, gender=gender, dob=dob, age=age, phone_no=phone_no)
+        print(patient.gender,patient.dob)
+        patient.save()
+
+        # Redirect to a success page or login page
+        return redirect('services')
+
+    return render(request, 'auth.html')

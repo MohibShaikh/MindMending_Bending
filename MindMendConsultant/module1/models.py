@@ -6,7 +6,7 @@ from django.db import models
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.CharField(max_length=10)
-    dob = models.DateField()
+    dob = models.CharField(max_length=3)
     phone_no = models.CharField(max_length=20)
     age = models.CharField(max_length=3)
 

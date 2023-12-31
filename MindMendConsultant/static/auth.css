@@ -262,6 +262,14 @@ a{
 .container.sign-up-mode::before{
     transform: translateX(0);
 }
+.sign-up-form {
+    max-height: 400px; /* Set a maximum height for the form */
+    overflow-y: auto; /* Add a vertical scrollbar if the content overflows the height */
+    padding: 20px; /* Add padding to the form for better appearance */
+}
+.input-field {
+    margin-bottom: 10px; /* Increase the margin between input fields */
+}
 
 .left-panel .image,
 .left-panel .content{

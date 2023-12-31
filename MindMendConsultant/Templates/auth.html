@@ -68,35 +68,48 @@
 
             </form>
             <!-- signup -->
-            <form action="" class="sign-up-form">
+            <form action="{% url 'service' %}" method="post" class="sign-up-form">
+
+                {% csrf_token %}
                 <h2 class="title">Sign up</h2>
 
                 <div class="input-field">
-                    <i class="fa-solid fa-user-check"></i>
-                    <input type="text" placeholder="User">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Username">
                 </div>
 
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
-                    <input type="text" placeholder="Email">
+                    <input type="email" name="email" placeholder="Email">
                 </div>
 
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="username">
+                    <input type="text" name="gender" placeholder="Gender">
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-calendar"></i>
+                    <input type="date" name="dob" placeholder="Date of Birth">
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-calendar"></i>
+                    <input type="number" name="age" placeholder="Age">
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" name="phone_no" placeholder="Phone Number">
                 </div>
 
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="password">
+                    <input type="password" name="password" placeholder="Password">
                 </div>
 
-                <div class="input-field">
-                    <i class="fa-solid fa-phone"></i>
-                    <input type="tel" placeholder="phone number">
-                </div>
                 <input type="submit" value="Sign up" class="btn">
-                <p class="social-text">Or sign in with social platform</p>
+                <p class="social-text">Or sign in with a social platform</p>
                 <div class="social-media">
                     <a href="" class="social-icon">
                         <i class="fab fa-facebook"></i>
@@ -112,7 +125,6 @@
                     </a>
                 </div>
                 <p class="account-text">Already have an account?<a href="" id="sign-in-btn2">Sign in</a></p>
-
             </form>
             <!-- signup closed -->
         </div>
