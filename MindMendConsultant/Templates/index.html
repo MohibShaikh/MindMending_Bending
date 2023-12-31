@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindMend</title>
+  {% load static %}
+  <link rel="stylesheet" href="{%static 'https://pro.fontawesome.com/releases/v5.10.0/css/all.css'%}"/>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-logo">
+      <a href="#"><img src="{%static 'images/clinic.png'%}"></a>
+    </div>
+    <ul class="nav-link">
+      <li class="link"><a href="#">Home</li>
+      <li class="link"><a href="service.html">Facilities</a></li>
+      <li class="link"><a href="./userprofile.html">Profile</a></li>
+      <li class="link"><a href="#">About</a></li>
+      <li class="link"><a href="#">Training</a></li>
+      
+    </ul>
+    <a href="/auth"><button class="btn btn-login">login</button></a>
+  </nav>
+  <!-- Navbar close  -->
+<!-- Modal -->
+<div class="overlay"></div>
+
+{% comment %} <div class="loginform">
+    <span class="close">&times;</span>
+    <form>
+    <div>
+        <label for="">Username</label>
+        <input type="text">
+    </div>
+    <div>
+        <label for="">Password</label>
+        <input type="text">
+    </div>
+    <button style="margin-right: 20px;">Login</button>
+    </form>
+</div> {% endcomment %}
+<!-- Modal CLosed -->
+  <!-- header cover photo -->
+  <header class="sec_container header_container">
+    <div class="header_content">
+      <span class="bg_blur"></span>
+      <span class="bg_blur header_blur"></span>
+      <h4>Best in your Hometown</h4>
+      <h1>Your<span>Trusted</span> Partner in Healthcare</h1>
+      <p>Where Compassionate Care Meets Medical Excellence , Your Partner on the Path to Health and Happiness</p>
+      <button class="btn"><a href="./service.html">Book Now</a></button>
+    </div>
+    <div class="header_image">
+      <img src="{%static 'images/mentalcover.png'%}" alt="header">
+    </div>
+  </header><br><br><br>
+  <!-- Header cover photo close -->
+  <section class="sec_container join_container">
+    <!-- <h2 class="sec_header">WHY US ? </h2> -->
+    <p class="sec_subheader">
+      <!-- At our clinic, choosing us means choosing a healthcare experience like no other. What sets us apart is our
+      unwavering commitment to your well-being and our dedication to providing personalized care that exceeds
+      expectations. With a team of highly skilled and compassionate medical professionals, advanced technology, and a
+      patient-centric approach, we ensure that every step of your journey with us is met with expertise and empathy. Our
+      track record of successful outcomes speaks for itself, reflecting the depth of our medical knowledge and the
+      genuine concern we have for each individual under our care. From accurate diagnoses to comprehensive treatment
+      plans, we stand by you, placing your health and comfort at the forefront. Your trust in us drives us to
+      continuously improve, innovate, and excel, making us the ultimate choice for your healthcare needs. -->
+
+    </p>
+    <div class="join_images">
+      <!-- <img src="images/clinic-D.jpg" alt=""> -->
+      <div class="join_grid">
+  <div class="card">
+    <span><i class="ri-user-star-fill"></i></span>
+    <div class="join_card_content">
+      <h4>24/7 Availablility</h4>
+      <p>A 24-hour primary care clinic with multiple doctors offering round-the-clock care would actualize better
+        and more sustainable care</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span><i class="ri-vidicon-fill"></i></span>
+    <div class="join_card_content">
+      <h4>Experienced Doctors</h4>
+      <p>Always at your service.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span><i class="ri-building-line"></i></span>
+    <div class="join_card_content">
+      <h4>Good Managment</h4>
+      <p>Steering Success Through Skillful Management</p>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+
+<!-- Modal -->
+  <div class="overlay"></div>
+
+  <div class="loginform">
+      <span class="close">&times;</span>
+      <form>
+      <div>
+          <label for="">Username</label>
+          <input type="text">
+      </div>
+      <div>
+          <label for="">Password</label>
+          <input type="text">
+      </div>
+      <button>Login</button>
+      </form>
+  </div>
+  <!-- Modal CLosed -->
+  <br><br>
+  <section class="sec_container explorer_container">
+    <div class="facilities_header">
+      <h2 class="sec_header">Explore our Facilities</h2>
+      
+    </div>
+    <div class="facilities_grid">
+      <div class="facilities_card">
+        <span><i class="ri-eye-line"></i></span>
+        <h4>Eye Checkup</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
+          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
+          quibusdam praesentium aut repellendus.</p>
+        <a href="sessions.html">Book Now<i class="ri-arrow-right-line"></i></a>
+      </div>
+
+      <div class="facilities_card">
+        <span><i class="ri-shake-hands-fill"></i></span>
+        <h4>Dialysis facilities</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
+          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
+          quibusdam praesentium aut repellendus.</p>
+        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
+      </div>
+
+      <div class="facilities_card">
+        <span><i class="ri-hospital-line"></i></span>
+        <h4>Physiotherapy</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
+          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
+          quibusdam praesentium aut repellendus.</p>
+        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
+      </div>
+
+      <div class="facilities_card">
+        <span><i class="ri-women-line"></i></span>
+        <h4>Women Ward</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
+          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
+          quibusdam praesentium aut repellendus.</p>
+        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
+      </div>
+
+      <div class="facilities_card">
+        <span><i class="ri-service-line"></i></span>
+        <h4>ECG</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
+          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
+          quibusdam praesentium aut repellendus.</p>
+        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
+      </div>
+
+      <div class="facilities_card">
+        <span><i class="ri-dossier-line"></i></span>
+        <h4>Laboratory</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
+          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
+          quibusdam praesentium aut repellendus.</p>
+        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
+      </div>
+    </div>
+
+    <div class="seemore"><a href="service.html">View all</a></div>
+  </section>
+
+
+
+  <section class="sec_container join_container">
+    <h2 class="sec_header">WHY US ? </h2>
+    <p class="sec_subheader">
+      At our clinic, choosing us means choosing a healthcare experience like no other. What sets us apart is our
+      unwavering commitment to your well-being and our dedication to providing personalized care that exceeds
+      expectations. With a team of highly skilled and compassionate medical professionals, advanced technology, and a
+      patient-centric approach, we ensure that every step of your journey with us is met with expertise and empathy. Our
+      track record of successful outcomes speaks for itself, reflecting the depth of our medical knowledge and the
+      genuine concern we have for each individual under our care. From accurate diagnoses to comprehensive treatment
+      plans, we stand by you, placing your health and comfort at the forefront. Your trust in us drives us to
+      continuously improve, innovate, and excel, making us the ultimate choice for your healthcare needs.
+
+    </p>
+    {% comment %} <div class="join_images">
+      <img src="images/clinic-D.jpg" alt="">
+      <div class="join_grid">
+
+        <div class="card">
+          <span><i class="ri-user-star-fill"></i></span>
+          <div class="join_card_content">
+            <h4>24/7 Availablility</h4>
+            <p>A 24-hour primary care clinic with multiple doctors offering round-the-clock care would actualize better
+              and more sustainable care</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <span><i class="ri-vidicon-fill"></i></span>
+          <div class="join_card_content">
+            <h4>Experienced Doctors</h4>
+            <p>Always at your service.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <span><i class="ri-building-line"></i></span>
+          <div class="join_card_content">
+            <h4>Good Managment</h4>
+            <p>Steering Success Through Skillful Management</p>
+          </div>
+        </div>
+      </div>
+    </div> {% endcomment %}
+  </section>
+  <br><hr>
+
+  
+
+<!-- Long banner -->
+<!-- <section id="sale1" class="sec-m1">
+  <img src="./images/short cover.jpg" alt=""> -->
+  <!-- <h3>Upto<span style="font-weight: bold;font-size: 25px; color: rgb(40, 252, 40);"> 50% off </span>on All The Gaming Accessories</h3> -->
+<!-- </section> -->
+<!-- long banner closed -->
+
+
+ <!-- contact -->
+ <section class="contact sec-c" id="contact">
+  <h2 class="allheading">Complain  <span>Form</span></h2>
+  <form action="">
+      <div class="input-box">
+          <input type="text" placeholder="Full Name">
+          <input type="email" placeholder="Email">
+      </div>
+      <div class="input-box">
+          <input type="tel" placeholder="Mobile Number">
+          <input type="text" placeholder="Subject For">
+      </div>
+      <textarea cols="30" rows="10" placeholder="Message"></textarea>
+      <input type="submit" placeholder="Send Message" class="btn">
+  </form>
+</section>
+<!-- contact closed -->
+
+
+  <!-- <section class="review"><br><br>
+    <center>
+      <h1>Reviews and Ratings</h1>
+    </center>
+
+    <div class="sec_container review_container">
+      <span><i class="ri-double-quotes-r"></i></span>
+      <div class="review_content">
+        <h4>MEMBER REVIEW</h4>
+        <p>
+          I visited this clinic for the first time and I'm thoroughly impressed. The staff was welcoming, the facilities
+          were modern and clean, and the doctor was attentive and knowledgeable. My concerns were addressed with care,
+          and I left feeling reassured about my health. Highly recommended!
+        </p>
+        <div class="review_rating">
+          <span><i class="ri-star-fill"></i></span>
+          <span><i class="ri-star-fill"></i></span>
+          <span><i class="ri-star-fill"></i></span>
+          <span><i class="ri-star-fill"></i></span>
+          <span><i class="ri-star-half-fill"></i></span>
+        </div>
+        <div class="review_footer">
+          <div class="review_member">
+            <img src="images/men.jpg" alt="member" />
+            <div class="review_member_details">
+              <h4>Abdullah Naveed</h4>
+              <p>Network Consultant</p>
+            </div>
+          </div>
+          <div class="review_arrow">
+            <span><i class="ri-arrow-left-line"></i></span>
+            <span><i class="ri-arrow-right-line"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <footer class="sec-p1">
+    <div class="c1">
+      <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+      <h3>Contact</h3>
+      <p><Strong>Telephone:</strong>0900-78601</p>
+      <p><strong>Address</strong> Street California , USA</p>
+      <h2>Social Sites</h2>
+      <div class="social">
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-youtube"></i>
+      </div>
+    </div>
+
+    <div class="c1">
+      <h3>About</h3>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Rules & Regulations</a>
+    </div>
+
+    <div class="c1">
+      <h3>My Account</h3>
+      <a href="#">Sign in</a>
+      <a href="#">MyAppointments</a>
+      <a href="#">Help</a>
+    </div>
+    
+
+
+  </footer>
+
+</body>
+<script src="{%static 'app.js'%}"></script>
+
+</html>

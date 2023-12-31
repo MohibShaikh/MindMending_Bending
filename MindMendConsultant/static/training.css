@@ -1,0 +1,52 @@
+
+.middle-box{
+    box-shadow: 3px 3px 5px 5px rgba(222, 226, 222, 0.9);
+    margin-left: 60px;
+    width: 95%;
+    height: 200px;
+    /* border: 1px solid; */
+    display: flex;
+    margin-left: 10px;
+}
+.wow{
+    display: flex;
+}
+.card-image1 {
+    position: relative;
+    height: 150px;
+    width: 450px;
+    /* border-radius: 50%; */
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 25px;
+  }
+  
+  .card-image1 .card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+  }
+  .book-button{
+    margin-top: 20px;
+    margin-left: 90px;
+    margin-right: 20px;
+    height: 45px;
+    width: 120px;
+  }
+  .profile-info{
+    margin-top: 12px;
+    margin-left: 30px;
+  }
+  .profile-info1{
+    font-size: large;
+  }
+  .profile-info2{
+    margin-top: 15px;
+    margin-left: 5px;
+    line-height: 30px;
+  }
+  .adjust{
+    margin-left: 25px;
+  }

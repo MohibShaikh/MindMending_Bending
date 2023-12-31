@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile page</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'style.css'%}">
+    <link rel="stylesheet" href="{%static 'userprofile.css'%}">
+</head>
+<body>
+
+
+    <nav>
+        <div class="nav-logo">
+            <a href="#"><img src="images/clinic.png"></a>
+        </div>
+        <ul class="nav-link">
+            <li class="link"><a href="#">Home</li>
+            <li class="link"><a href="#">Facilities</a></li>
+            <li class="link"><a href="service.html">Service</a></li>
+            <li class="link"><a href="#">About</a></li>
+            <li class="link"><a href="#">Reviews</a></li>
+        <li class="link"><a href="#">Training</a></li>
+
+        </ul>
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-login">Logout</button>
+        </form>
+    </nav>
+<br><br>
+
+
+    <div class="overlay"></div>
+
+    <div class="loginform">
+        <span class="close">&times;</span>
+        <form>
+        <div>
+            <label for="">Username</label>
+            <input type="text">
+        </div>
+        <div>
+            <label for="">Password</label>
+            <input type="text">
+        </div>
+        <button>Login</button>
+        </form>
+    </div>
+
+    
+    <!-- <div style="margin-top: 150px; margin-left: 450px;"><h1>User Profile</h1></div> -->
+    <div class="wow">
+        <div class="side-box">
+            <div class="card-image">
+                <img src="./images/Doc1.webp" class="card-img" alt="">
+            </div>
+            <div class="list">
+            <a href="#about"><div>About</div></a>
+            <a href="#booked-sess"><div>Sessions</div></a>
+            <a href="#about"><div>Update</div></a>
+            <a href="#about"><div>reviews</div></a>
+            
+            </div>
+        </div>
+        
+        <div class="adjust"><br>
+            <div style="margin-top:5px; margin-left: 350px;" id="about"><h1>User Profile</h1></div>
+            <br><br>
+            <div class="middle-box">
+                <div class="profile-info">
+                    <div class="profile-info1">
+                        <div style="display: flex;">
+                            <h4>Name:  </h4> {{ therapist.user.username }}
+                        </div>
+                        <div style="display: flex;">
+                            <h4>Contact:</h4>{{ therapist.phone_no }}
+                        </div>
+                        <div style="display: flex;">
+                        <h4>Email: </h4>{{ therapist.user.email }}</div>
+                        <div>
+                            <h4>Specialization: </h4><em>{{ therapist.specialization }}</em>
+                        </div>
+                    </div>
+                    <!-- <div class="profile-info2">
+                        <div>MBBS, FCPS (Internal Medicine), Certified Diabetologist (UK) , Certified Hypertension
+                            Specialist (PSIM)</div>
+                    </div> -->
+                </div>
+                
+                <!-- <button class="book-button btn-login1">Book Consultation</button> -->
+            </div>
+            <div id="booked-sess" style="margin-left: 330px; margin-top: 10px;">
+                <h1>Booked Sessions</h1>
+            </div>
+            <div class="bs">
+
+                <div class="bst">
+                    <div class="bst-content">
+                    <h3>Family Therapy</h3>
+                    <h4>Patient Name: <span style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Mohib Uddin</span></h4>
+                    <h4>Date:</h4><h5>15-Jan-2023</h5>
+                    <h6>Timing: 5:00 - 6:00</h6>
+                    </div>
+                    <div>
+                        <button id="bokey">Remove</button>
+                    </div></div>
+
+                <div class="bst">
+                        <div class="bst-content">
+                        <h3>Couple Therapy</h3>
+                        <h4>Patient Name: <span style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Maaz Bin Tariq</span></h4>
+                        <h4>Date:</h4><h5>15-Jan-2023</h5>
+                        <h6>Timing: 5:00 - 6:00</h6>
+                        </div>
+                        <div>
+                            <button id="bokey">Remove</button>
+                </div></div>
+
+                <div class="bst">
+                    <div class="bst-content">
+                    <h3>Interpersonal Therapy</h3>
+                    <h4>Patient Name: <span style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Mohib Uddin</span></h4>
+                    <h4>Date:</h4><h5>15-Jan-2023</h5>
+                    <h6>Timing: 5:00 - 6:00</h6>
+                    </div>
+                    <div>
+                        <button id="bokey">Remove</button>
+                    </div></div>
+            
+            </div>
+        </div>
+    </div>
+      
+<br>
+    
+  <footer class="sec-p1">
+    <div class="c1">
+      <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+      <h3>Contact</h3>
+      <p><Strong>Telephone:</strong>0900-78601</p>
+      <p><strong>Address</strong> Street California , USA</p>
+      <h2>Social Sites</h2>
+      <div class="social">
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-youtube"></i>
+      </div>
+    </div>
+
+    <div class="c1">
+      <h3>About</h3>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Rules & Regulations</a>
+    </div>
+
+    <div class="c1">
+      <h3>My Account</h3>
+      <a href="#">Sign in</a>
+      <a href="#">MyAppointments</a>
+      <a href="#">Help</a>
+    </div>
+    
+
+
+  </footer>
+
+
+
+</body>
+<script src="{%static 'app.js'%}"></script>
+</html>

@@ -1,0 +1,78 @@
+# views.py
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+
+from module1.models import Patient, Therapist, Sessions
+
+
+# Create your views here.
+def index(request):
+    return render(request, 'index.html')
+
+
+def sessions(request):
+    return render(request, 'sessions.html')
+
+
+def services(request):
+    facilit = Sessions.objects.all()
+    context = {
+        'facilit': facilit,
+    }
+    return render(request, 'service.html', context)
+
+
+def training(request):
+    return render(request, 'training.html')
+
+
+def report_gen(request):
+    return render(request, 'gen_report.html')
+
+
+def Booking(request):
+    return render(request, 'Book.html')
+
+
+def auth(request):
+    return render(request,"auth.html")
+
+def profile(request):
+    user = request.user  # Get the logged-in user
+    context = {'user': user}
+    return render(request, 'userprofile.html', context)
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(username,password)
+        user = authenticate(request, username=username, password=password)
+        print(user)
+
+        if user is not None:
+            login(request, user)
+            # for key, value in request.session.items():
+            #     print(f"{key}: {value}")
+            messages.success(request, 'Login successful.')
+            therapist = Therapist.objects.get(user=user)
+            # print(therapist)
+            # for key, value in request.session.items():
+            #     print(f"{key}: {value}")
+            context = {
+                'therapist': therapist,
+            }
+            return render(request, 'userprofile.html', context)
+        else:
+            messages.error(request, 'Invalid login credentials.')
+
+    return redirect('/')
+
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'Logout successful.')
+    return redirect('index')

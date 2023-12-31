@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css'%}">
+    <title>Sessions</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo">
+          <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
+        </div>
+        <ul class="nav-link">
+          <li class="link"><a href="/">Home</a></li>
+          <li class="link"><a href="./service">Facilities</a></li>
+          <li class="link"><a href="./userprofile">Profile</a></li>
+          <li class="link"><a href="#">About</a></li>
+          <li class="link"><a href="#">Reviews</a></li>
+           <li class="link"><a href="#">Training</a></li>
+
+        </ul>
+        <button class="btn btn-login">Login</button>
+      </nav>
+
+
+
+      <div class="overlay"></div>
+
+<div class="loginform">
+    <span class="close">&times;</span>
+    <form>
+    <div>
+        <label for="">Username</label>
+        <input type="text">
+    </div>
+    <div>
+        <label for="">Password</label>
+        <input type="text">
+    </div>
+    <button>Login</button>
+    </form>
+</div>
+
+    <section class="sec_container price_container">
+        <h2 class="sec_header">OUR SPECIAL PACKAGES</h2>
+        <p class="sec_subheader1">
+          Unlock Extraordinary Value with Our Exclusive Special Packages!
+        </p>
+        <div class="price_grid">
+          <div class="price_card">
+            <div class="price_card_content">
+              <h4>Dr.Abdullah Kazi</h4>
+              <div class="card-image">
+                <img src="./images/Doc1.webp" class="card-img" alt="">
+                </div>
+              <h3>Rs.2500</h3>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Chest X-ray
+              </p>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Urinilaysis
+              </p>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Pelvic Ultrasound
+              </p>
+            </div>
+            <a href="./Book.html"><button class="btn price_btn">Book Now</button></a>
+          </div>
+          <div class="price_card">
+            <div class="price_card_content">
+              <h4>Weekly Plan</h4>
+              <div class="card-image">
+                <img src="./images/Doc1.webp" class="card-img" alt="">
+                </div>
+              <h3>Rs.3500</h3>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Dental Checkup
+              </p>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Chest X-ray
+              </p>
+    
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                ECG
+              </p>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Dialysis
+              </p>
+            </div>
+            <button class="btn price_btn">Join Now</button>
+          </div>
+          <div class="price_card">
+            <div class="price_card_content">
+              <h4>Monthly Plan</h4>
+              <div class="card-image">
+                <img src="./images/Doc1.webp" class="card-img" alt="">
+                </div>
+              <h3>Rs.4500</h3>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Chest X-ray
+              </p>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Dental Checkup
+              </p>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                ECG
+              </p>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Urinilaysis
+              </p>
+              <p>
+                <i class="ri-checkbox-circle-line"></i>
+                Pelvic Ultrasound
+              </p>
+            </div>
+            <button class="btn price_btn">Join Now</button>
+          </div>
+        </div>
+      </section>
+</body>
+<script src="{%static 'app.js'%}"></script>
+</html>

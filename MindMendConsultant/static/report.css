@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.header-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.patient-info {
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.test-results {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+}
+
+.interpretation {
+    margin-top: 10px;
+}
+
+.note {
+    font-style: italic;
+    margin-top: 10px;
+}

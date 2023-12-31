@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  {%load static%}
+  <link rel="stylesheet" href="{%static 'Book.css'%}">
+    <link rel="stylesheet" href="{%static 'style.css'%}">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-logo">
+            <a href="#"><img src="images/clinic.png"></a>
+        </div>
+        <ul class="nav-link">
+            <li class="link"><a href="#">Home</li>
+            <li class="link"><a href="#">Facilities</a></li>
+            <li class="link"><a href="service.html">Service</a></li>
+            <li class="link"><a href="#">About</a></li>
+            <li class="link"><a href="#">Reviews</a></li>
+        </ul>
+        <button class="btn btn-login">Login</button>
+    </nav>
+
+
+
+    <div class="overlay"></div>
+
+    <div class="loginform">
+        <span class="close">&times;</span>
+        <form>
+        <div>
+            <label for="">Username</label>
+            <input type="text">
+        </div>
+        <div>
+            <label for="">Password</label>
+            <input type="text">
+        </div>
+        <button>Login</button>
+        </form>
+    </div>
+
+
+
+    <br><br>
+
+
+    <div class="wow">
+        <!-- <div class="side-box">
+        </div> -->
+        <div class="adjust">
+            <div class="middle-box">
+                <div class="card-image">
+                    <img src="./images/Doc1.webp" class="card-img" alt="">
+                </div>
+                <div class="profile-info">
+                    <div class="profile-info1">
+                        <div>
+                            <h2>Dr. Arif Alvi</h2>
+                        </div>
+                        <div>
+                            <h4><em>Neurologist</em></h4>
+                        </div>
+                    </div>
+                    <div class="profile-info2">
+                        <div class="price">Price: $19.99</div>
+                        <div>MBBS, FCPS (Internal Medicine), Certified Diabetologist (UK) , Certified Hypertension
+                            Specialist (PSIM)</div>
+                    </div>
+                </div>
+                <button class="book-button btn-login1">Book Consultation</button>
+            </div>
+        </div>
+    </div>
+
+<div class="overlay1">
+    <div class="bookform">
+        <span class="close1">&times;</span>
+        <form>
+        <div>
+            <label for="">Name</label>
+            <input type="text">
+        </div>
+        <div>
+            <label for="">Phone Number</label>
+            <input type="tel">
+        </div>
+        <div>
+            <label for="">Time Slot</label>
+            <input type="datetime-local">
+        </div>
+        
+            <label for="">Choose payment method</label>
+            <select id="cars" name="cars">
+                <option value="volvo">Easypaisa</option>
+                <option value="saab">JazzCash</option>
+                <option value="fiat">Bank payment</option>
+                <option value="audi">other</option>
+            </select>
+        
+        <button>Book</button>
+        </form>
+    </div>
+</div>
+
+
+
+    <br><br>
+    <div class="para"><center><h3>About</h3></center><br>
+        Diagnostic Expertise: Utilizing state-of-the-art diagnostic tools, Dr. Arif Alvi excels in identifying
+        and understanding neurological conditions. From headaches and seizures to movement disorders, each case is
+        approached with meticulous attention to detail.
+
+        Treatment Tailored to You: Dr. Arif Alvi believes in personalized care plans, recognizing that each
+        patient is unique. Whether managing chronic conditions or providing acute interventions, the treatment approach
+        is carefully tailored to optimize outcomes and improve quality of life.
+
+        Neurological Consultations: Offering thorough neurological consultations, Dr.Arif Alvi ensures open
+        communication with patients, addressing concerns and educating them about their conditions. This collaborative
+        approach empowers individuals to actively participate in their healthcare journey.
+    </div>
+
+
+    <section class="review"><br><br>
+        <center>
+          <h1>Reviews and Ratings</h1>
+        </center>
+    
+        <div class="sec_container review_container">
+          <span><i class="ri-double-quotes-r"></i></span>
+          <div class="review_content">
+            <h4>MEMBER REVIEW</h4>
+            <p>
+              I visited this clinic for the first time and I'm thoroughly impressed. The staff was welcoming, the facilities
+              were modern and clean, and the doctor was attentive and knowledgeable. My concerns were addressed with care,
+              and I left feeling reassured about my health. Highly recommended!
+            </p>
+            <div class="review_rating">
+              <span><i class="ri-star-fill"></i></span>
+              <span><i class="ri-star-fill"></i></span>
+              <span><i class="ri-star-fill"></i></span>
+              <span><i class="ri-star-fill"></i></span>
+              <span><i class="ri-star-half-fill"></i></span>
+            </div>
+            <div class="review_footer">
+              <div class="review_member">
+                <img src="images/men.jpg" alt="member" />
+                <div class="review_member_details">
+                  <h4>Abdullah Naveed</h4>
+                  <p>Network Consultant</p>
+                </div>
+              </div>
+            <!-- <div class="review_arrow">
+                <span><i class="ri-arrow-left-line"></i></span>
+                <span><i class="ri-arrow-right-line"></i></span>
+              </div>-->
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <footer class="sec-p1">
+        <div class="c1">
+          <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+          <h3>Contact</h3>
+          <p><Strong>Telephone:</strong>0900-78601</p>
+          <p><strong>Address</strong> Street California , USA</p>
+          <h2>Social Sites</h2>
+          <div class="social">
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-youtube"></i>
+          </div>
+        </div>
+    
+        <div class="c1">
+          <h3>About</h3>
+          <a href="#">About Us</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Rules & Regulations</a>
+        </div>
+    
+        <div class="c1">
+          <h3>My Account</h3>
+          <a href="#">Sign in</a>
+          <a href="#">MyAppointments</a>
+          <a href="#">Help</a>
+        </div>
+        
+    
+    
+      </footer>
+
+</body>
+<script src="{%static 'app.js'%}"></script>
+</html>

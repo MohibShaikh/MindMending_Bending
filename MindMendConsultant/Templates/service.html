@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+   {% load static %}
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <!-- Navbar -->
+  <nav>
+    <div class="nav-logo">
+      <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
+    </div>
+    <ul class="nav-link">
+      <li class="link"><a href="#">Home</a></li>
+      <li class="link"><a href="./service.html">Facilities</a></li>
+      <li class="link"><a href="./userprofile.html">Profile</a></li>
+      <li class="link"><a href="#">About</a></li>
+      <li class="link"><a href="#">Training</a></li>
+
+    </ul>
+    <button class="btn btn-login">Login</button>
+  </nav>
+
+  <div class="overlay"></div>
+
+  <div class="loginform">
+    <span class="close">&times;</span>
+    <form>
+      <div>
+        <label for="">Username</label>
+        <input type="text">
+      </div>
+      <div>
+        <label for="">Password</label>
+        <input type="text">
+      </div>
+      <button>Login</button>
+    </form>
+  </div>
+
+  <!-- Navbar close -->
+  <section class="sec_container explorer_container">
+    <div class="facilities_header">
+      <h2 class="sec_header">Explore our Facilities</h2>
+    </div>
+    <div class="facilities_grid">
+      {% for session in facilit %}
+      <div class="facilities_card">
+        <span><i class="ri-dossier-line"></i></span>
+        <h4>{{ session.facility }}</h4>
+        <p>{{ session.description }}</p>
+        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+</body>
+<script src="{% static 'app.js' %}"></script>
+</html>
