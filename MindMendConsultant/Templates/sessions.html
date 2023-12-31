@@ -55,14 +55,14 @@
                     <div class="card-image">
                         <img src="{% static 'images/Doc1.webp' %}" class="card-img" alt="">
                     </div>
-                    <h3>Rs.2500</h3>
+                    <h3>Rs.{{ session.price }}</h3>
                     <p>
                         <i class="ri-checkbox-circle-line"></i>
-                        {{ session.facility }}
+                        Specialization: {{ therapist.specialization }}
                     </p>
                     <p>
                         <i class="ri-checkbox-circle-line"></i>
-                        {{ session.description }}
+                        Reviews: 4/5
                     </p>
                 </div>
                 <a href="./Book.html"><button class="btn price_btn">Book Now</button></a>

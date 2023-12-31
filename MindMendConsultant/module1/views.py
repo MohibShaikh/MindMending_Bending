@@ -12,8 +12,25 @@ def index(request):
     return render(request, 'index.html')
 
 
-def sessions(request):
-    return render(request, 'sessions.html')
+
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'Logout successful.')
+    return redirect('index')
+
+def sessions(request, session_id):
+    # Retrieve the session
+    session = get_object_or_404(Sessions, session_id=session_id)
+
+    # Retrieve therapists related to the session
+    therapists = Therapist.objects.filter(sessions=session)
+
+    context = {
+        'session': session,
+        'therapists': therapists,
+    }
+    return render(request, 'sessions.html', context)
 
 
 def services(request):
@@ -70,22 +87,3 @@ def login_view(request):
             messages.error(request, 'Invalid login credentials.')
 
     return redirect('/')
-
-
-def logout_view(request):
-    logout(request)
-    messages.success(request, 'Logout successful.')
-    return redirect('index')
-
-def sessions(request, session_id):
-    # Retrieve the session
-    session = get_object_or_404(Sessions, session_id=session_id)
-
-    # Retrieve therapists related to the session
-    therapists = Therapist.objects.filter(sessions=session)
-
-    context = {
-        'session': session,
-        'therapists': therapists,
-    }
-    return render(request, 'sessions.html', context)

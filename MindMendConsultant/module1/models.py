@@ -30,6 +30,7 @@ class Sessions(models.Model):
     session_id = models.AutoField(primary_key=True)
     facility = models.CharField(max_length=50)
     description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=1000.00)
 
     def __str__(self):
         return f'{self.facility}'
