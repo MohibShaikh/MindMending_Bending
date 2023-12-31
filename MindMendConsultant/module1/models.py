@@ -26,7 +26,7 @@ class Therapist(models.Model):
 
 
 class Sessions(models.Model):
-    therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
+    therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE, null=True, blank=True)
     session_id = models.AutoField(primary_key=True)
     facility = models.CharField(max_length=50)
     description = models.TextField()
