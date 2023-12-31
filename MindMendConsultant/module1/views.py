@@ -1,6 +1,6 @@
 # views.py
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
@@ -76,3 +76,16 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'Logout successful.')
     return redirect('index')
+
+def sessions(request, session_id):
+    # Retrieve the session
+    session = get_object_or_404(Sessions, session_id=session_id)
+
+    # Retrieve therapists related to the session
+    therapists = Therapist.objects.filter(sessions=session)
+
+    context = {
+        'session': session,
+        'therapists': therapists,
+    }
+    return render(request, 'sessions.html', context)

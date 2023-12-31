@@ -55,7 +55,7 @@
         <span><i class="ri-dossier-line"></i></span>
         <h4>{{ session.facility }}</h4>
         <p>{{ session.description }}</p>
-        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
+        <a href="{% url 'sessions' session_id=session.session_id %}">Book Now<i class="ri-arrow-right-line"></i></a>
       </div>
       {% endfor %}
     </div>

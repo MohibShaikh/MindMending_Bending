@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Sessions</title>
+    <title>session</title>
 </head>
 <body>
     <nav>
@@ -48,14 +48,14 @@
             Unlock Extraordinary Value with Our Exclusive Special Packages!
         </p>
         <div class="price_grid">
-            {% for session in sessions %}
+            {% for therapist in therapists %}
             <div class="price_card">
                 <div class="price_card_content">
                     <h4>{{ session.therapist.user.username }}</h4>
                     <div class="card-image">
-                        <img src="{{ session.therapist.profile_picture.url }}" class="card-img" alt="">
+                        <img src="{% static 'images/Doc1.webp' %}" class="card-img" alt="">
                     </div>
-                    <h3>Rs.{{ session.price }}</h3>
+                    <h3>Rs.2500</h3>
                     <p>
                         <i class="ri-checkbox-circle-line"></i>
                         {{ session.facility }}
