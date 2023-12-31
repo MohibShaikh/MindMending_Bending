@@ -19,9 +19,9 @@
       <a href="#"><img src="{%static 'images/clinic.png'%}"></a>
     </div>
     <ul class="nav-link">
-      <li class="link"><a href="#">Home</li>
-      <li class="link"><a href="service.html">Facilities</a></li>
-      <li class="link"><a href="./userprofile.html">Profile</a></li>
+      <li class="link"><a href="{% url 'index' %}">Home</a></li>
+      <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
+      <li class="link"><a href="/">Profile</a></li>
       <li class="link"><a href="#">About</a></li>
       <li class="link"><a href="#">Training</a></li>
       
@@ -30,22 +30,22 @@
   </nav>
   <!-- Navbar close  -->
 <!-- Modal -->
-<div class="overlay"></div>
+<!--<div class="overlay"></div>-->
 
-{% comment %} <div class="loginform">
-    <span class="close">&times;</span>
-    <form>
-    <div>
-        <label for="">Username</label>
-        <input type="text">
-    </div>
-    <div>
-        <label for="">Password</label>
-        <input type="text">
-    </div>
-    <button style="margin-right: 20px;">Login</button>
-    </form>
-</div> {% endcomment %}
+<!--{% comment %} <div class="loginform">-->
+<!--    <span class="close">&times;</span>-->
+<!--    <form>-->
+<!--    <div>-->
+<!--        <label for="">Username</label>-->
+<!--        <input type="text">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="">Password</label>-->
+<!--        <input type="text">-->
+<!--    </div>-->
+<!--    <button style="margin-right: 20px;">Login</button>-->
+<!--    </form>-->
+<!--</div> {% endcomment %}-->
 <!-- Modal CLosed -->
   <!-- header cover photo -->
   <header class="sec_container header_container">
