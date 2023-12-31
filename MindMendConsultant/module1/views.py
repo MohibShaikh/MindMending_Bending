@@ -9,7 +9,8 @@ from module1.models import Patient, Therapist, Sessions
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    sessions = Sessions.objects.all()  # Fetch all sessions from the database
+    return render(request, 'index.html', {'sessions': sessions})
 
 
 

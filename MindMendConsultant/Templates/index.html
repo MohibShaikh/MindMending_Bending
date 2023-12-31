@@ -132,62 +132,17 @@
       
     </div>
     <div class="facilities_grid">
+      {% for session in sessions %}
       <div class="facilities_card">
         <span><i class="ri-eye-line"></i></span>
-        <h4>Eye Checkup</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
-          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
-          quibusdam praesentium aut repellendus.</p>
-        <a href="sessions.html">Book Now<i class="ri-arrow-right-line"></i></a>
+        <h4>{{ session.facility }}</h4>
+        <p>{{ session.description }}</p>
+        <a href="{% url 'sessions' session_id=session.session_id %}">Book Now<i class="ri-arrow-right-line"></i></a>
       </div>
-
-      <div class="facilities_card">
-        <span><i class="ri-shake-hands-fill"></i></span>
-        <h4>Dialysis facilities</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
-          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
-          quibusdam praesentium aut repellendus.</p>
-        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
-      </div>
-
-      <div class="facilities_card">
-        <span><i class="ri-hospital-line"></i></span>
-        <h4>Physiotherapy</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
-          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
-          quibusdam praesentium aut repellendus.</p>
-        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
-      </div>
-
-      <div class="facilities_card">
-        <span><i class="ri-women-line"></i></span>
-        <h4>Women Ward</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
-          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
-          quibusdam praesentium aut repellendus.</p>
-        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
-      </div>
-
-      <div class="facilities_card">
-        <span><i class="ri-service-line"></i></span>
-        <h4>ECG</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
-          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
-          quibusdam praesentium aut repellendus.</p>
-        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
-      </div>
-
-      <div class="facilities_card">
-        <span><i class="ri-dossier-line"></i></span>
-        <h4>Laboratory</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quidem corrupti, modi asperiores
-          quos ducimus numquam quisquam est aliquam quia dicta, aliquid doloremque officiis magnam? Nostrum
-          quibusdam praesentium aut repellendus.</p>
-        <a href="#">Book Now<i class="ri-arrow-right-line"></i></a>
-      </div>
+      {% endfor %}
     </div>
 
-    <div class="seemore"><a href="service.html">View all</a></div>
+    <div class="seemore"><a href="{% url 'service' %}">View all</a></div>
   </section>
 
 
@@ -307,22 +262,29 @@
 
   <footer class="sec-p1">
     <div class="c1">
-      <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+      <img style="width: 16%;" src="{% static 'images/clinic.png' %}" alt="logo">
       <h3>Contact</h3>
       <p><Strong>Telephone:</strong>0900-78601</p>
       <p><strong>Address</strong> Street California , USA</p>
       <h2>Social Sites</h2>
-      <div class="social">
-        <i class="fab fa-facebook"></i>
-        <i class="fab fa-instagram"></i>
-        <i class="fab fa-twitter"></i>
-        <i class="fab fa-youtube"></i>
-      </div>
+                <div class="social-media">
+                    <a href="" class="social-icon">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
     </div>
 
     <div class="c1">
       <h3>About</h3>
-      <a href="#">About Us</a>
       <a href="#">Contact Us</a>
       <a href="#">Privacy Policy</a>
       <a href="#">Rules & Regulations</a>
