@@ -53,9 +53,27 @@ def Booking(request):
     return render(request, 'Book.html')
 
 
-def auth(request):
-    return render(request,"auth.html")
+# def auth(request):
+#     return render(request,"auth.html")
 
+def auth(request):
+    if request.method == 'POST':
+        # Your authentication logic here
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Login successful.')
+
+            # Redirect to the home page or a default page
+            return redirect('services')
+
+        else:
+            messages.error(request, 'Invalid login credentials.')
+
+    return render(request, 'auth.html')
 def profile(request):
     user = request.user  # Get the logged-in user
     context = {'user': user}

@@ -9,13 +9,27 @@ function closeModal(overlayClass, formClass) {
 }
 
 function showConfirmationOverlay(facilityName) {
-        // Show overlay and ask for confirmation
+    // Check if the user is authenticated
+    var isAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+
+    // If user is authenticated, show overlay and ask for confirmation
+    if (isAuthenticated) {
         var confirmation = confirm("Are you sure you want to book " + facilityName + "?");
+
+        // If confirmed, redirect based on the user's choice
         if (confirmation) {
-            // If confirmed, redirect to the profile or home page
             window.location.href = "{% url 'index' %}";
         }
+    } else {
+        // If not authenticated, redirect to the authentication page
+        window.location.href = "{% url 'auth' %}";
     }
+}
+
+var closeBtn1 = document.querySelector('.close1');
+closeBtn1.addEventListener("click", function () {
+    closeModal('overlay1', 'bookform');
+});
 
 var btnLogin = document.querySelector('.btn-login');
 btnLogin.addEventListener("click", function () {

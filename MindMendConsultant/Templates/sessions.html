@@ -66,7 +66,7 @@
                     </p>
                 </div>
                 {% if user.is_authenticated %}
-                    <a href="#" onclick="showConfirmationOverlay('{{ session.facility }}')"><button class="btn price_btn">Book Now</button></a>
+                    <a href="{% url 'service' %}" onclick="showConfirmationOverlay('{{ session.facility }}')"><button class="btn price_btn">Book Now</button></a>
                 {% else %}
                     <a href="{% url 'auth' %}"><button class="btn price_btn">Login to Book</button></a>
                 {% endif %}
