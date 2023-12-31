@@ -51,7 +51,7 @@
             {% for therapist in therapists %}
             <div class="price_card">
                 <div class="price_card_content">
-                    <h4>{{ session.therapist.user.username }}</h4>
+                    <h4>{{ therapist.user.username }}</h4>
                     <div class="card-image">
                         <img src="{% static 'images/Doc1.webp' %}" class="card-img" alt="">
                     </div>
@@ -65,7 +65,11 @@
                         Review: 4.5/5
                     </p>
                 </div>
-                <a href="./Book.html"><button class="btn price_btn">Book Now</button></a>
+                {% if user.is_authenticated %}
+                    <a href="#" onclick="showConfirmationOverlay('{{ session.facility }}')"><button class="btn price_btn">Book Now</button></a>
+                {% else %}
+                    <a href="{% url 'auth' %}"><button class="btn price_btn">Login to Book</button></a>
+                {% endif %}
             </div>
             {% endfor %}
         </div>

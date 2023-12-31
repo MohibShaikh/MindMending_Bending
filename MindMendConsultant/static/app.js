@@ -8,6 +8,15 @@ function closeModal(overlayClass, formClass) {
     document.querySelector(`.${formClass}`).classList.remove('showloginform');
 }
 
+function showConfirmationOverlay(facilityName) {
+        // Show overlay and ask for confirmation
+        var confirmation = confirm("Are you sure you want to book " + facilityName + "?");
+        if (confirmation) {
+            // If confirmed, redirect to the profile or home page
+            window.location.href = "{% url 'index' %}";
+        }
+    }
+
 var btnLogin = document.querySelector('.btn-login');
 btnLogin.addEventListener("click", function () {
     showModal('overlay', 'loginform');
