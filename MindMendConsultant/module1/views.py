@@ -1,6 +1,5 @@
 # views.py
 from datetime import datetime
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
@@ -133,6 +132,31 @@ def register_patient(request):
         patient.save()
 
         # Redirect to a success page or login page
-        return redirect('services')
+        return redirect('service')
 
     return render(request, 'auth.html')
+# def register_patient(request):
+#     if request.method == 'POST':
+#         form = PatientRegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#
+#             # Extract additional form data
+#             gender = form.cleaned_data['gender']
+#             dob = form.cleaned_data['dob']
+#             age = form.cleaned_data['age']
+#             phone_no = form.cleaned_data['phone_no']
+#
+#             # Create a Patient
+#             patient = Patient(user=user, gender=gender, dob=dob, age=age, phone_no=phone_no)
+#             patient.save()
+#
+#             # Log in the user
+#             login(request, user)
+#
+#             # Redirect to a success page or profile page
+#             return redirect('services')  # Update the redirection URL if needed
+#     else:
+#         form = PatientRegistrationForm()
+#
+#     return render(request, 'auth.html', {'form': form})
