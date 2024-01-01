@@ -80,30 +80,39 @@ def auth(request):
 def profile(request):
     user = request.user  # Get the logged-in user
     context = {'user': user}
-    return render(request, 'userprofile.html', context)
+    return render(request, 'patient_profile.html', context)
 
-
+@login_required(login_url='auth')
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username,password)
+        print(username, password)
         user = authenticate(request, username=username, password=password)
         print(user)
 
         if user is not None:
             login(request, user)
-            # for key, value in request.session.items():
-            #     print(f"{key}: {value}")
             messages.success(request, 'Login successful.')
-            therapist = Therapist.objects.get(user=user)
-            # print(therapist)
-            # for key, value in request.session.items():
-            #     print(f"{key}: {value}")
-            context = {
-                'therapist': therapist,
-            }
-            return render(request, 'userprofile.html', context)
+
+            # Check if the user is a therapist
+            if hasattr(user, 'therapist'):
+                therapist = user.therapist
+                context = {
+                    'therapist': therapist,
+                    'is_patient': False,
+                }
+                return render(request, 'userprofile.html', context)
+
+            # Check if the user is a patient
+            elif hasattr(user, 'patient'):
+                patient = user.patient
+                context = {
+                    'patient': patient,
+                    'is_patient': True,
+                }
+                return render(request, 'patient_profile.html', context)
+
         else:
             messages.error(request, 'Invalid login credentials.')
 

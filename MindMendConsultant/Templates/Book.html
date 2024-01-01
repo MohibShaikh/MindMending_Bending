@@ -20,7 +20,13 @@
         <ul class="nav-link">
             <li class="link"><a href="{% url 'index' %}">Home</a></li>
             <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
-            <li class="link"><a href="/">Profile</a></li>
+            {% if user.is_authenticated %}
+                <!-- If the user is authenticated, link to the patient profile -->
+                <li class="link"><a href="{% url 'profile' %}">Profile</a></li>
+            {% else %}
+                <!-- If the user is not authenticated, link to the authentication page -->
+                <li class="link"><a href="{% url 'auth' %}">Profile</a></li>
+            {% endif %}
             <li class="link"><a href="service.html">Service</a></li>
             <li class="link"><a href="#">About</a></li>
             <li class="link"><a href="#">Reviews</a></li>
