@@ -12,5 +12,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('gen_report/', views.report_gen, name='report_gen'),
     path('register_patient/', views.register_patient, name='register_patient'),
-
+    path('training/', views.training, name='training'),
+    path('book_session/<int:session_id>/', views.book_session, name='book_session'),
 ]

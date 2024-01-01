@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,29 +10,29 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <title>session</title>
 </head>
+
 <body>
     <nav>
         <div class="nav-logo">
-          <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
+            <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
         </div>
-            <ul class="nav-link">
-              <li class="link"><a href="{% url 'index' %}">Home</a></li>
-              <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
-                {% if user.is_authenticated %}
-                    <!-- If the user is authenticated, link to the patient profile -->
-                    <li class="link"><a href="{% url 'profile' %}">Profile</a></li>
-                {% else %}
-                    <!-- If the user is not authenticated, link to the authentication page -->
-                    <li class="link"><a href="{% url 'auth' %}">Profile</a></li>
-                {% endif %}
-              <li class="link"><a href="#">About</a></li>
-              <li class="link"><a href="#">Training</a></li>
-
-            </ul>
+        <ul class="nav-link">
+            <li class="link"><a href="{% url 'index' %}">Home</a></li>
+            <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
+            {% if user.is_authenticated %}
+            <!-- If the user is authenticated, link to the patient profile -->
+            <li class="link"><a href="{% url 'profile' %}">Profile</a></li>
+            {% else %}
+            <!-- If the user is not authenticated, link to the authentication page -->
+            <li class="link"><a href="{% url 'auth' %}">Profile</a></li>
+            {% endif %}
+            <li class="link"><a href="#">About</a></li>
+            <li class="link"><a href="#">Training</a></li>
+        </ul>
         {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}"><button class="btn">Logout</button></a>
+        <a href="{% url 'logout' %}"><button class="btn">Logout</button></a>
         {% else %}
-            <a href="{% url 'auth' %}"><button class="btn">Login</button></a>
+        <a href="{% url 'auth' %}"><button class="btn">Login</button></a>
         {% endif %}
     </nav><br><br>
 
@@ -76,9 +77,9 @@
                     </p>
                 </div>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'service' %}" onclick="showConfirmationOverlay('{{ session.facility }}')"><button class="btn price_btn">Book Now</button></a>
+                <a href="{% url 'book_session' therapist.id %}"><button class="btn price_btn">Book Now</button></a>
                 {% else %}
-                    <a href="{% url 'auth' %}"><button class="btn price_btn">Login to Book</button></a>
+                <a href="{% url 'auth' %}"><button class="btn price_btn">Login to Book</button></a>
                 {% endif %}
             </div>
             {% endfor %}
@@ -86,4 +87,5 @@
     </section>
 </body>
 <script src="{% static 'app.js' %}"></script>
+
 </html>

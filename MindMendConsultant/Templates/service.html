@@ -27,7 +27,7 @@
             <li class="link"><a href="{% url 'auth' %}">Profile</a></li>
         {% endif %}
       <li class="link"><a href="#">About</a></li>
-      <li class="link"><a href="#">Training</a></li>
+      <li class="link"><a href="{% url 'training' %}">Training</a></li>
 
     </ul>
         {% if user.is_authenticated %}

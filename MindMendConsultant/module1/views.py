@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from module1.models import Patient, Therapist, Sessions
+from module1.models import Patient, Therapist, Sessions, BookedSession
 
 
 # Create your views here.
@@ -15,7 +15,35 @@ def index(request):
     return render(request, 'index.html', {'sessions': sessions})
 
 
+def training(request):
+    return render(request, 'training.html')
 
+def book_session(request, session_id):
+    if request.method == 'POST':
+        therapist_id = request.POST.get('therapist_id')
+        session_id = request.POST.get('session_id')
+        payment_method = request.POST.get('payment_method')
+        date_time = request.POST.get('date_time')
+
+        therapist = Therapist.objects.get(id=therapist_id)
+        session = Sessions.objects.get(session_id=session_id)
+
+        # Create a BookedSession instance
+        booked_session = BookedSession.objects.create(
+            therapist=therapist,
+            patient=request.user.patient,
+            session_type=session.facility,
+            amount=session.price,
+            date_time=date_time
+        )
+
+        # Send notification to therapist
+        # Implement your notification logic here, e.g., sending an email or using a messaging system
+
+        messages.success(request, 'Session booked successfully.')
+        return redirect('index')
+
+    return render(request, 'book_session.html', {'session_id': session_id})  # Handle other cases as needed
 
 def logout_view(request):
     logout(request)
@@ -144,28 +172,3 @@ def register_patient(request):
         return redirect('service')
 
     return render(request, 'auth.html')
-# def register_patient(request):
-#     if request.method == 'POST':
-#         form = PatientRegistrationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#
-#             # Extract additional form data
-#             gender = form.cleaned_data['gender']
-#             dob = form.cleaned_data['dob']
-#             age = form.cleaned_data['age']
-#             phone_no = form.cleaned_data['phone_no']
-#
-#             # Create a Patient
-#             patient = Patient(user=user, gender=gender, dob=dob, age=age, phone_no=phone_no)
-#             patient.save()
-#
-#             # Log in the user
-#             login(request, user)
-#
-#             # Redirect to a success page or profile page
-#             return redirect('services')  # Update the redirection URL if needed
-#     else:
-#         form = PatientRegistrationForm()
-#
-#     return render(request, 'auth.html', {'form': form})

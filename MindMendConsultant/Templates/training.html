@@ -15,7 +15,7 @@
 
   <nav>
     <div class="nav-logo">
-      <a href="#"><img src="images/clinic.png"></a>
+      <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
     </div>
     <ul class="nav-link">
       <li class="link"><a href="{% url 'index' %}">Home</a></li>
@@ -47,7 +47,7 @@
     <div class="adjust">
       <div class="middle-box">
         <div class="card-image1">
-          <img src="./images/couple.jpg" class="card-img" alt="">
+          <img src="{% static 'images/couple.jpg' %}" class="card-img" alt="">
         </div>
         <div class="profile-info">
           <div class="profile-info1">
@@ -75,7 +75,7 @@
 
   <footer class="sec-p1">
     <div class="c1">
-      <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+      <img style="width: 16%;" src="{% static 'images/clinic.png' %}" alt="logo">
       <h3>Contact</h3>
       <p><Strong>Telephone:</strong>0900-78601</p>
       <p><strong>Address</strong> Street California , USA</p>
