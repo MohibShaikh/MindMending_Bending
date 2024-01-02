@@ -35,6 +35,7 @@ class Sessions(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=1000.00)
     default_datetime = models.DateTimeField(default="2006-10-25 14:30:59")
 
+
     def __str__(self):
         return f'{self.facility}'
 
@@ -61,6 +62,8 @@ class BookedSession(models.Model):
     date_time = models.DateTimeField()
     session_type = models.CharField(max_length=50)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    paypal_payment_id = models.CharField(max_length=50, blank=True, null=True)
+    selected_time = models.CharField(max_length=10, blank=True, null=True)
 
 
 class ComplainForm(models.Model):
