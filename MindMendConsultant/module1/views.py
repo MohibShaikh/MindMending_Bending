@@ -82,8 +82,35 @@ def report_gen(request):
     return render(request, 'gen_report.html')
 
 
-def Booking(request):
-    return render(request, 'Book.html')
+def booking(request, therapist_id):
+    therapist = Therapist.objects.get(pk=therapist_id)
+    session_id = request.GET.get('session_id')
+
+
+    if request.method == 'POST':
+        # Process the form data and save the booked session
+        patient = request.user.patient  # Assuming the logged-in user is a patient
+        session_type = request.POST.get('session_type')
+        amount = request.POST.get('amount')
+        selected_time = request.POST.get('selected_time')
+        payment_method = request.POST.get('payment_method', 'nayapay')
+
+        booked_session = BookedSession.objects.create(
+            therapist=therapist,
+            patient=patient,
+            session_type=session_type,
+            amount=amount,
+            selected_time=selected_time,
+            payment_method=payment_method
+        )
+
+        # Update therapist earnings
+        therapist.earnings += booked_session.amount
+        therapist.save()
+
+        return render(request, 'patient_profile.html', {'booked_session': booked_session})
+
+    return render(request, 'Book.html', {'therapist': therapist})
 
 
 # def auth(request):

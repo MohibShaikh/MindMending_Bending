@@ -73,14 +73,14 @@
                 <div class="profile-info">
                     <div class="profile-info1">
                         <div>
-                            <h2>Dr. Arif Alvi</h2>
+                            <h2>Dr. {{ therapist.user.username }}</h2>
                         </div>
                         <div>
-                            <h4><em>Neurologist</em></h4>
+                            <h4><em>{{ therapist.specialization }}</em></h4>
                         </div>
                     </div>
                     <div class="profile-info2">
-                        <div class="price">Price: $19.99</div>
+                        <div class="price">Rs 9000</div>
                         <div>MBBS, FCPS (Internal Medicine), Certified Diabetologist (UK) , Certified Hypertension
                             Specialist (PSIM)</div>
                     </div>
@@ -90,32 +90,32 @@
         </div>
     </div>
 
-<div class="overlay1">
-    <div class="bookform">
-        <span class="close1">&times;</span>
-        <form>
-        <div>
-            <label for="">Name</label>
-            <input type="text">
-        </div>
-        <div>
-            <label for="">Phone Number</label>
-            <input type="tel">
-        </div>
-        <div>
-            <label for="">Time Slot</label>
-            <input type="datetime-local">
-        </div>
+    <div class="overlay1">
+        <div class="bookform">
+            <span class="close1">&times;</span>
+            <form method="post" action="{% url 'book' therapist_id=therapist.id %}">
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div>
+                    <label for="phone_number">Phone Number</label>
+                    <input type="tel" id="phone_number" name="phone_number" required>
+                </div>
+                <div>
+                    <label for="time_slot">Time Slot</label>
+                    <input type="datetime-local" id="time_slot" name="time_slot" required>
+                </div>
         
-            <label for="">Choose payment method</label>
-            <select id="cars" name="cars">
-                <option value="volvo">Easypaisa</option>
-                <option value="saab">JazzCash</option>
-                <option value="fiat">Bank payment</option>
-                <option value="audi">other</option>
-            </select>
-        
-        <button>Book</button>
+                <label for="payment_method">Choose payment method</label>
+                <select id="payment_method" name="payment_method">
+                    <option value="easypaisa">Easypaisa</option>
+                    <option value="jazzcash">JazzCash</option>
+                    <option value="bank_payment">Bank payment</option>
+                    <option value="other">Other</option>
+                </select>
+
+        <button type="submit">Book</button>
         </form>
     </div>
 </div>
@@ -212,5 +212,5 @@
       </footer>
 
 </body>
-<script src="{% static 'app.js' %}"></script>
+<script src="{% static 'booking.js' %}"></script>
 </html>

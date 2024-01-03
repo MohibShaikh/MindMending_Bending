@@ -22,6 +22,7 @@ class Therapist(models.Model):
     gender = models.CharField(max_length=10)
     phone_no = models.CharField(max_length=15)
     specialization = models.CharField(max_length=50)
+    earnings = models.DecimalField(max_digits=10, decimal_places=2, default=1000.0)
 
     def __str__(self):
         return f"{self.user.username} - {self.specialization}"
@@ -59,12 +60,10 @@ class TherapistFeedback(models.Model):
 class BookedSession(models.Model):
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    date_time = models.DateTimeField()
     session_type = models.CharField(max_length=50)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    paypal_payment_id = models.CharField(max_length=50, blank=True, null=True)
     selected_time = models.CharField(max_length=10, blank=True, null=True)
-
+    payment_method = models.CharField(max_length=50, default='nayapay')
 
 class ComplainForm(models.Model):
     name = models.CharField(max_length=100)

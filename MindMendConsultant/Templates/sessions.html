@@ -77,7 +77,7 @@
                     </p>
                 </div>
                 {% if user.is_authenticated %}
-                <a href="{% url 'book_session' therapist.id %}"><button class="btn price_btn">Book Now</button></a>
+                <a href="{% url 'book' therapist.id %}"><button class="btn price_btn">Book Now</button></a>
                 {% else %}
                 <a href="{% url 'auth' %}"><button class="btn price_btn">Login to Book</button></a>
                 {% endif %}
