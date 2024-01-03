@@ -78,21 +78,21 @@
                 <div class="profile-info">
                     <div class="profile-info1">
                         <div style="display: flex;">
-                            <h4>Name: </h4> {{ patient.user.username }}
+                            <h4>Name: </h4> {{ user.username }}
                         </div>
                         <div style="display: flex;">
-                            <h4>Contact:</h4>{{ patient.phone_no }}
+                            <h4>Contact:</h4>{{ user.patient.phone_no }}
                         </div>
                         <div style="display: flex;">
-                            <h4>Email: </h4>{{ patient.user.email }}</div>
+                            <h4>Email: </h4>{{ user.patient.email }}</div>
                         <div>
-                            <h4>Gender: </h4><em>{{ patient.gender }}</em>
+                            <h4>Gender: </h4><em>{{ user.patient.gender }}</em>
                         </div>
                         <div>
-                            <h4>Date of Birth: </h4><em>{{ patient.dob }}</em>
+                            <h4>Date of Birth: </h4><em>{{ user.patient.dob }}</em>
                         </div>
                         <div>
-                            <h4>Age: </h4><em>{{ patient.age }}</em>
+                            <h4>Age: </h4><em>{{ user.patient.age }}</em>
                         </div>
                     </div>
                 </div>
@@ -100,17 +100,17 @@
             <div id="booked-sess" style="margin-left: 330px; margin-top: 10px;">
                 <h1>Booked Sessions</h1>
             </div>
-            <div class="bs">
-                {% for session in patient.bookedsession_set.all %}
-                <div class="bst">
-                    <div class="bst-content">
-                        <h3>{{ session.session_type }}</h3>
-                        <h4>Therapist: {{ session.therapist.user.username }}</h4>
-                        <h4>Date:</h4>
-                        <h5>{{ session.date_time|date:"d-M-Y" }}</h5>
-                        <h6>Timing: {{ session.date_time|time:"h:i" }} - {{ session.date_time|time:"h:i" }}</h6>
-                    </div>
-                    <div>
+         <div class="bs">
+            {% for booked_sessions in booked_sessions %}
+            <div class="bst">
+                <div class="bst-content">
+                    <h3>{{ booked_sessions.session_type }}</h3>
+                    <h4>Therapist: {{ booked_sessions.therapist.user.username }}</h4>
+                    <h4>Date:</h4>
+                    <h5>{{ session.date_time|date:"d-M-Y" }}</h5>
+                    <h6>Timing: {{ booked_sessions.date_time|time:"h:i" }} - {{ booked_sessions.date_time|time:"h:i" }}</h6>
+                </div>
+                <div>
                         <form method="post" action="{% url 'remove_session' session.id %}">
                             {% csrf_token %}
                             <button id="bokey" type="submit">Remove</button>
