@@ -91,9 +91,6 @@
                         <div>
                             <h4>Date of Birth: </h4><em>{{ user.patient.dob }}</em>
                         </div>
-                        <div>
-                            <h4>Age: </h4><em>{{ user.patient.age }}</em>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -101,19 +98,19 @@
                 <h1>Booked Sessions</h1>
             </div>
          <div class="bs">
-            {% for booked_sessions in booked_sessions %}
+            {% for booked_session in booked_sessions %}
             <div class="bst">
                 <div class="bst-content">
-                    <h3>{{ booked_sessions.session_type }}</h3>
-                    <h4>Therapist: {{ booked_sessions.therapist.user.username }}</h4>
+                    <h3>{{ booked_session.session_type }}</h3>
+                    <h4>Therapist: {{ booked_session.therapist.user.username }}</h4>
                     <h4>Date:</h4>
-                    <h5>{{ session.date_time|date:"d-M-Y" }}</h5>
-                    <h6>Timing: {{ booked_sessions.date_time|time:"h:i" }} - {{ booked_sessions.date_time|time:"h:i" }}</h6>
+                    <h5>{{ booked_session.selected_time|date:"d-M-Y" }}</h5>
+                    <h6>Timing: {{ booked_session.selected_time|time:"h:i" }} - {{ booked_session.selected_time|time:"h:i" }}</h6>
                 </div>
                 <div>
-                        <form method="post" action="{% url 'remove_session' session.id %}">
+                        <form method="post" action="">
                             {% csrf_token %}
-                            <button id="bokey" type="submit">Remove</button>
+                            <button id="bokey" type="submit">Cancel</button>
                         </form>
                     </div>
                 </div>

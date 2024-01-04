@@ -1,11 +1,11 @@
 function showModal(overlayClass, formClass) {
-    document.querySelector(`.${overlayClass}`).classList.add('showoverlay');
-    document.querySelector(`.${formClass}`).classList.add('showloginform');
+    document.querySelector(`.${overlayClass}`).classList.add('showoverlay1');
+    document.querySelector(`.${formClass}`).classList.add('showloginform1');
 }
 
 function closeModal(overlayClass, formClass) {
-    document.querySelector(`.${overlayClass}`).classList.remove('showoverlay');
-    document.querySelector(`.${formClass}`).classList.remove('showloginform');
+    document.querySelector(`.${overlayClass}`).classList.remove('showoverlay1');
+    document.querySelector(`.${formClass}`).classList.remove('showloginform1');
 }
 
 function showConfirmationOverlay(facilityName) {

@@ -60,9 +60,9 @@ class TherapistFeedback(models.Model):
 class BookedSession(models.Model):
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    session_type = models.CharField(max_length=50)
+    session_type = models.CharField(max_length=50, default="Regular", blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    selected_time = models.CharField(max_length=10, blank=True, null=True)
+    selected_time = models.DateTimeField(max_length=10, blank=True, null=True)
     payment_method = models.CharField(max_length=50, default='nayapay')
 
 class ComplainForm(models.Model):

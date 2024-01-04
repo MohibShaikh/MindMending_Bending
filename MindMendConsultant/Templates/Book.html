@@ -15,7 +15,7 @@
 <body>
     <nav>
         <div class="nav-logo">
-            <a href="#"><img src="images/clinic.png"></a>
+            <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
         </div>
         <ul class="nav-link">
             <li class="link"><a href="{% url 'index' %}">Home</a></li>
@@ -45,6 +45,7 @@
     <div class="loginform">
         <span class="close">&times;</span>
         <form>
+        {% csrf_token %}
         <div>
             <label for="">Username</label>
             <input type="text">
@@ -53,7 +54,7 @@
             <label for="">Password</label>
             <input type="text">
         </div>
-        <button>Login</button>
+        <button type="submit">Login</button>
         </form>
     </div>
 
@@ -68,7 +69,7 @@
         <div class="adjust">
             <div class="middle-box">
                 <div class="card-image">
-                    <img src="./images/Doc1.webp" class="card-img" alt="">
+                    <img src="{% static 'images/Doc1.webp' %}" class="card-img" alt="">
                 </div>
                 <div class="profile-info">
                     <div class="profile-info1">
@@ -94,6 +95,7 @@
         <div class="bookform">
             <span class="close1">&times;</span>
             <form method="post" action="{% url 'book' therapist_id=therapist.id %}">
+                {% csrf_token %}
                 <div>
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required>
@@ -101,6 +103,10 @@
                 <div>
                     <label for="phone_number">Phone Number</label>
                     <input type="tel" id="phone_number" name="phone_number" required>
+                </div>
+                <div>
+                    <label for="session_type">Session Type</label>
+                    <input type="text" id="session_type" name="session_type" required>
                 </div>
                 <div>
                     <label for="time_slot">Time Slot</label>
@@ -111,11 +117,11 @@
                 <select id="payment_method" name="payment_method">
                     <option value="easypaisa">Easypaisa</option>
                     <option value="jazzcash">JazzCash</option>
-                    <option value="bank_payment">Bank payment</option>
+                    <option value="bank_payment">Nayapay</option>
                     <option value="other">Other</option>
                 </select>
 
-        <button type="submit">Book</button>
+        <button type="submit" id="bookSubmit">Book</button>
         </form>
     </div>
 </div>
@@ -161,7 +167,7 @@
             </div>
             <div class="review_footer">
               <div class="review_member">
-                <img src="images/men.jpg" alt="member" />
+                <img src="{% static 'images/men.jpg' %}" alt="member" />
                 <div class="review_member_details">
                   <h4>Abdullah Naveed</h4>
                   <p>Network Consultant</p>
@@ -179,7 +185,7 @@
 
       <footer class="sec-p1">
         <div class="c1">
-          <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+          <img style="width: 16%;" src="{% static 'images/clinic.png' %}" alt="logo">
           <h3>Contact</h3>
           <p><Strong>Telephone:</strong>0900-78601</p>
           <p><strong>Address</strong> Street California , USA</p>
@@ -213,4 +219,20 @@
 
 </body>
 <script src="{% static 'booking.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the form and submit button
+        const bookingForm = document.getElementById('bookingForm');
+        const bookSubmit = document.getElementById('bookSubmit');
+
+        // Add an event listener to the form submission
+        bookingForm.addEventListener('submit', function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Manually submit the form using JavaScript
+            bookingForm.submit();
+        });
+    });
+</script>
 </html>

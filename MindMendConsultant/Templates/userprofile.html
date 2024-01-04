@@ -109,49 +109,23 @@
             <h1>Booked Sessions</h1>
         </div>
         <div class="bs">
-
-            <div class="bst">
-                <div class="bst-content">
-                    <h3>Family Therapy</h3>
-                    <h4>Patient Name: <span
-                            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Mohib Uddin</span>
-                    </h4>
-                    <h4>Date:</h4><h5>15-Jan-2023</h5>
-                    <h6>Timing: 5:00 - 6:00</h6>
+            {% for booked_session in booked_sessions %}
+                <div class="bst">
+                    <div class="bst-content">
+                        <h3>Session Type: {{ booked_session.session_type }}</h3>
+                        <h4>Patient Name: {{ booked_session.patient.user.username }}</h4>
+                        <h4>Date:</h4>
+                        <h5>{{ booked_session.selected_time|date:"d-M-Y" }}</h5>
+                        <h6>Timing: {{ booked_session.selected_time|time:"h:i" }} - {{ booked_session.selected_time|time:"h:i" }}</h6>
+                    </div>
+                    <div>
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <button id="bokey" type="submit">Remove</button>
+                        </form>
+                    </div>
                 </div>
-                <div>
-                    <button id="bokey">Remove</button>
-                </div>
-            </div>
-
-            <div class="bst">
-                <div class="bst-content">
-                    <h3>Couple Therapy</h3>
-                    <h4>Patient Name: <span
-                            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Maaz Bin Tariq</span>
-                    </h4>
-                    <h4>Date:</h4><h5>15-Jan-2023</h5>
-                    <h6>Timing: 5:00 - 6:00</h6>
-                </div>
-                <div>
-                    <button id="bokey">Remove</button>
-                </div>
-            </div>
-
-            <div class="bst">
-                <div class="bst-content">
-                    <h3>Interpersonal Therapy</h3>
-                    <h4>Patient Name: <span
-                            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Mohib Uddin</span>
-                    </h4>
-                    <h4>Date:</h4><h5>15-Jan-2023</h5>
-                    <h6>Timing: 5:00 - 6:00</h6>
-                </div>
-                <div>
-                    <button id="bokey">Remove</button>
-                </div>
-            </div>
-
+            {% endfor %}
         </div>
     </div>
 </div>

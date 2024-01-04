@@ -91,11 +91,14 @@ def booking(request, therapist_id):
         # Process the form data and save the booked session
         patient = request.user.patient  # Assuming the logged-in user is a patient
         session_type = request.POST.get('session_type')
-        amount = request.POST.get('amount')
-        selected_time = request.POST.get('selected_time')
+        amount = 9000
+        selected_time_str = request.POST.get('time_slot')
+        selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
+
+        print(selected_time)
         payment_method = request.POST.get('payment_method', 'nayapay')
 
-        booked_session = BookedSession.objects.create(
+        booked_sessions = BookedSession.objects.create(
             therapist=therapist,
             patient=patient,
             session_type=session_type,
@@ -105,10 +108,10 @@ def booking(request, therapist_id):
         )
 
         # Update therapist earnings
-        therapist.earnings += booked_session.amount
+        therapist.earnings += booked_sessions.amount
         therapist.save()
 
-        return render(request, 'patient_profile.html', {'booked_session': booked_session})
+        return render(request, 'patient_profile.html', {'booked_sessions': booked_sessions})
 
     return render(request, 'Book.html', {'therapist': therapist})
 
@@ -139,6 +142,7 @@ def auth(request):
 def profile(request):
     user = request.user  # Get the logged-in user
     patient = user.patient
+    print(patient)
     booked_sessions = patient.bookedsession_set.all()
     print(user)
     context = {'user': user, 'booked_sessions': booked_sessions}
@@ -161,9 +165,11 @@ def login_view(request):
             # Check if the user is a therapist
             if hasattr(user, 'therapist'):
                 therapist = user.therapist
+                booked_sessions = BookedSession.objects.filter(therapist=therapist)
                 context = {
                     'therapist': therapist,
-                    'is_patient': False,
+                    'booked_sessions': booked_sessions,
+                    'is_patient': False
                 }
                 return render(request, 'userprofile.html', context)
 

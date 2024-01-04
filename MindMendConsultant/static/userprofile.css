@@ -18,7 +18,7 @@
     box-shadow: 3px 3px 5px 5px rgba(222, 226, 222, 0.9);
     margin-left: 80px;
     width: 820px;
-    height: 200px;
+    height: auto;
     /* border: 1px solid; */
     display: flex;
     margin-left: 40px;
@@ -97,6 +97,8 @@
     margin-left: 10px;
 }
 #bokey{
-    background: red; color: black; font-size: medium; border-radius: 10%; font-weight: 500;
+    background: #7FFFD4; color: black; font-size: medium; border-radius: 10%; font-weight: 500;
     margin-left: 10px; margin-top: 20px;
+    padding-left:5px;
+    padding-right:5px;
 }
