@@ -7,6 +7,17 @@
     {%load static%}
     <link rel="stylesheet" href="{%static 'style.css'%}">
     <link rel="stylesheet" href="{%static 'userprofile.css'%}">
+    <script>
+    function openNotificationOverlay() {
+    var overlay = document.getElementById('notification-overlay');
+    overlay.style.display = 'block';
+}
+
+function closeNotificationOverlay() {
+    var overlay = document.getElementById('notification-overlay');
+    overlay.style.display = 'none';
+}
+</script>
 </head>
 <body>
 
@@ -178,7 +189,6 @@
 
 </footer>
 
-
+<script src="{% static 'app.js' %}"></script>
 </body>
-<script src="{%static 'app.js'%}"></script>
 </html>

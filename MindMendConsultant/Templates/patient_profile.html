@@ -8,6 +8,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="{% static 'userprofile.css' %}">
+
 </head>
 
 <body>
@@ -23,7 +24,7 @@
             <li class="link"><a href="#">About</a></li>
             <li class="link"><a href="#">Reviews</a></li>
             <li class="link"><a href="#">Training</a></li>
-            <li class="link"><a href="#" id="notif-btn" onclick="openNotificationOverlay()">
+            <li class="link"><a href="#" id="notif-btn" onclick="">
                     <img src="{% static 'images/bell.png' %}" alt="Notification Bell"></a></li>
 
         </ul>
@@ -31,22 +32,22 @@
     </nav>
     <br><br>
 
-    <div class="overlay"></div>
+<!--    <div class="overlay">-->
 
-    <div class="loginform">
-        <span class="close">&times;</span>
-        <form>
-            <div>
-                <label for="">Username</label>
-                <input type="text">
-            </div>
-            <div>
-                <label for="">Password</label>
-                <input type="text">
-            </div>
-            <button>Login</button>
-        </form>
-    </div>
+<!--    <div class="loginform">-->
+<!--        <span class="close">&times;</span>-->
+<!--        <form>-->
+<!--            <div>-->
+<!--                <label for="">Username</label>-->
+<!--                <input type="text">-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <label for="">Password</label>-->
+<!--                <input type="text">-->
+<!--            </div>-->
+<!--            <button>Login</button>-->
+<!--        </form>-->
+<!--    </div></div>-->
 
     <div class="wow">
         <div class="side-box">
@@ -168,14 +169,4 @@
 
 </body>
 <script src="{% static 'app.js' %}"></script>
-    <script>
-        function openNotificationOverlay() {
-            document.getElementById("notification-overlay").style.display = "block";
-        }
-
-        function closeNotificationOverlay() {
-            document.getElementById("notification-overlay").style.display = "none";
-        }
-    </script>
-
 </html>

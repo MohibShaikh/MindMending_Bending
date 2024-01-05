@@ -40,7 +40,10 @@ var closeBtn = document.querySelector('.close');
 closeBtn.addEventListener("click", function () {
     closeModal('overlay', 'loginform');
 });
-
+//var btnNotifi = document.querySelector('#notif-btn')
+//btnNotifi.addEventListener("click", function () {
+//    closeModal('overlay', 'loginform');
+});
 var btnLogin1 = document.querySelector('.btn-login1');
 btnLogin1.addEventListener("click", function () {
     showModal('overlay1', 'bookform');
@@ -50,3 +53,16 @@ var closeBtn1 = document.querySelector('.close1');
 closeBtn1.addEventListener("click", function () {
     closeModal('overlay1', 'bookform');
 });
+var closeBtnOverlay = document.querySelector('.close');
+closeBtnOverlay.addEventListener("click", function () {
+    closeModal('overlay', 'loginform');
+})
+function openNotificationOverlay() {
+    var overlay = document.getElementById('notification-overlay');
+    overlay.style.display = 'block';
+}
+
+function closeNotificationOverlay() {
+    var overlay = document.getElementById('notification-overlay');
+    overlay.style.display = 'none';
+}

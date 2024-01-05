@@ -125,9 +125,10 @@ def booking(request, therapist_id):
         amount = 9000
         selected_time_str = request.POST.get('time_slot')
         selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
-
-        print(selected_time)
+        # print(selected_time)
         payment_method = request.POST.get('payment_method', 'nayapay')
+        notification_text = f"New session booked by patient {patient.user.username} on {selected_time}."
+
 
         booked_session = BookedSession.objects.create(
             therapist=therapist,
@@ -135,7 +136,8 @@ def booking(request, therapist_id):
             session_type=session_type,
             amount=amount,
             selected_time=selected_time,
-            payment_method=payment_method
+            payment_method=payment_method,
+            notification = notification_text
         )
 
         # Update therapist earnings
