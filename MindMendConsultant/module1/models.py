@@ -65,6 +65,7 @@ class BookedSession(models.Model):
     selected_time = models.DateTimeField(max_length=10, blank=True, null=True)
     payment_method = models.CharField(max_length=50, default='nayapay')
 
+
 class ComplainForm(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()

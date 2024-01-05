@@ -35,10 +35,10 @@
       <h4>Best in your Hometown</h4>
       <h1>Your<span>Trusted</span> Partner in Healthcare</h1>
       <p>Where Compassionate Care Meets Medical Excellence , Your Partner on the Path to Health and Happiness</p>
-      <button class="btn">Book Now</button>
+      <button class="btn" ><a href="{% url 'services' %}">Book Now</a></button>
     </div>
     <div class="header_image">
-      <img src="./images/boy2.png" alt="header">
+      <img src="images/boy2.png" alt="header">
     </div>
   </header>
   <!-- Header cover photo close -->
@@ -123,7 +123,7 @@
       </div>
     </div>
 
-    <center><a href="service.html">See More --> </a></center>
+    <center><a href="{% url 'service.html' %}">See More --> </a></center>
   </section>
 
 
