@@ -64,6 +64,7 @@ class BookedSession(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     selected_time = models.DateTimeField(max_length=10, blank=True, null=True)
     payment_method = models.CharField(max_length=50, default='nayapay')
+    notification = models.TextField(blank=True, null=True)
 
 
 class ComplainForm(models.Model):
