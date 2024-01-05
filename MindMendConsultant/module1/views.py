@@ -1,13 +1,13 @@
 # views.py
-from datetime import datetime
+from datetime import datetime, date,timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-
 from module1.models import Patient, Therapist, Sessions, BookedSession
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def index(request):
@@ -81,11 +81,42 @@ def training(request):
 def report_gen(request):
     return render(request, 'gen_report.html')
 
-
+# Working one
+# def booking(request, therapist_id):
+#     therapist = Therapist.objects.get(pk=therapist_id)
+#     session_id = request.GET.get('session_id')
+#
+#
+#     if request.method == 'POST':
+#         # Process the form data and save the booked session
+#         patient = request.user.patient  # Assuming the logged-in user is a patient
+#         session_type = request.POST.get('session_type')
+#         amount = 9000
+#         selected_time_str = request.POST.get('time_slot')
+#         selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
+#
+#         print(selected_time)
+#         payment_method = request.POST.get('payment_method', 'nayapay')
+#
+#         booked_sessions = BookedSession.objects.create(
+#             therapist=therapist,
+#             patient=patient,
+#             session_type=session_type,
+#             amount=amount,
+#             selected_time=selected_time,
+#             payment_method=payment_method
+#         )
+#
+#         # Update therapist earnings
+#         therapist.earnings += booked_sessions.amount
+#         therapist.save()
+#
+#         return render(request, 'patient_profile.html', {'booked_sessions': booked_sessions})
+#
+#     return render(request, 'Book.html', {'therapist': therapist})
 def booking(request, therapist_id):
     therapist = Therapist.objects.get(pk=therapist_id)
     session_id = request.GET.get('session_id')
-
 
     if request.method == 'POST':
         # Process the form data and save the booked session
@@ -98,7 +129,7 @@ def booking(request, therapist_id):
         print(selected_time)
         payment_method = request.POST.get('payment_method', 'nayapay')
 
-        booked_sessions = BookedSession.objects.create(
+        booked_session = BookedSession.objects.create(
             therapist=therapist,
             patient=patient,
             session_type=session_type,
@@ -108,13 +139,38 @@ def booking(request, therapist_id):
         )
 
         # Update therapist earnings
-        therapist.earnings += booked_sessions.amount
+        therapist.earnings += booked_session.amount
         therapist.save()
 
-        return render(request, 'patient_profile.html', {'booked_sessions': booked_sessions})
+        # Send email notifications
+        send_email_to_therapist(therapist, booked_session,selected_time_str=selected_time_str)
+        send_email_to_patient(patient, booked_session,selected_time_str=selected_time_str)
+
+        return render(request, 'patient_profile.html', {'booked_sessions': [booked_session]})
 
     return render(request, 'Book.html', {'therapist': therapist})
 
+def send_email_to_therapist(therapist, booked_session, selected_time_str):
+    subject = 'New Session Booked'
+    selected_time = selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
+    message = f"Dear {therapist.user.username},\n\n" \
+              f"Patient: {booked_session.patient.user.username}\n" \
+              f"Date: {booked_session.selected_time.strftime('%d-%b-%Y')}\n" \
+              f"Timing: {booked_session.selected_time.strftime('%H:%M')} - {selected_time.strftime('%H:%M')}"
+
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_email = therapist.user.email
+
+    send_mail(subject, message, from_email, [to_email])
+
+def send_email_to_patient(patient, booked_session, selected_time_str):
+    selected_time=selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
+    subject = 'Session Booked Confirmation'
+    message = f"Dear {patient.user.username},\n\nYour session has been booked successfully.\n\nTherapist: {booked_session.therapist.user.username}\nDate: {selected_time.strftime('%d-%b-%Y')}\n\nTiming: {booked_session.selected_time.strftime('%H:%M')} - {selected_time.strftime('%H:%M')}\n\nThank you for choosing our service!"
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_email = patient.user.email
+
+    send_mail(subject, message, from_email, [to_email])
 
 # def auth(request):
 #     return render(request,"auth.html")
