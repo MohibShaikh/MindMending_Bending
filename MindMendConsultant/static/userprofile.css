@@ -32,7 +32,38 @@
     margin-top: 20px;
     margin-left: 25px;
     background: #088178;
-}  
+}
+        /* Style for the notification overlay */
+        #notification-overlay {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 2;
+        }
+
+        #notification-overlay .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        #notification-overlay .notification-content {
+            text-align: left;
+        }
+#notif-btn {
+            margin-bottom: 10px;
+        }
+
+#notif-btn img {
+            width: 30px;
+            height: 28px;
+        }
 .card-image .card-img {
     height: 100%;
     width: 100%;

@@ -27,12 +27,11 @@
         {% endif %}
         <li class="link"><a href="#">About</a></li>
         <li class="link"><a href="#">Training</a></li>
+        <li class="link"><a href="#" id="notif-btn" onclick="openNotificationOverlay()">
+                    <img src="{% static 'images/bell.png' %}" alt="Notification Bell"></a></li>
 
     </ul>
-    <form action="{% url 'logout' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-login">Logout</button>
-    </form>
+    <a href="{% url 'logout' %}"><button class="btn">Logout</button></a>
 </nav>
 <br><br>
 
@@ -127,6 +126,20 @@
                 </div>
             {% endfor %}
         </div>
+    </div>
+</div>
+    <div id="notification-overlay" class="overlay">
+    <span class="close" onclick="closeNotificationOverlay()">&times;</span>
+    <div class="notification-content">
+        <h2>New Booked Session</h2>
+        {% if newest_booked_session %}
+            <p>Session</p>
+            <p>Booked by {{ newest_booked_session.patient.user.username }}</p>
+            <p>Date: {{ newest_booked_session.selected_time|date:"d-M-Y" }}</p>
+            <p>Timing: {{ newest_booked_session.selected_time|time:"h:i" }} - {{ newest_booked_session.selected_time_end|time:"h:i" }}</p>
+        {% else %}
+            <p>No new notifications</p>
+        {% endif %}
     </div>
 </div>
 
