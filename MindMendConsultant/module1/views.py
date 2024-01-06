@@ -259,9 +259,13 @@ def login_view(request):
             # Check if the user is a patient
             elif hasattr(user, 'patient'):
                 patient = user.patient
+                recent_notifications = Notification.objects.filter(user=user, is_read=False)[:10]
+                booked_sessions = BookedSession.objects.filter(patient=patient)
                 context = {
                     'patient': patient,
                     'is_patient': True,
+                    'notif': recent_notifications,
+                    'booked_sessions': booked_sessions,
                 }
                 return render(request, 'patient_profile.html', context)
 
