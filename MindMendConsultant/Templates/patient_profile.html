@@ -8,165 +8,190 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="{% static 'userprofile.css' %}">
-
 </head>
 
 <body>
 
-    <nav>
-        <div class="nav-logo">
-            <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
+<nav>
+    <div class="nav-logo">
+        <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
+    </div>
+    <ul class="nav-link">
+        <li class="link"><a href="{% url 'index' %}">Home</a></li>
+        <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
+        <li class="link"><a href="{% url 'sessions' %}">Service</a></li>
+        <li class="link"><a href="#">About</a></li>
+        <li class="link"><a href="#">Reviews</a></li>
+        <li class="link"><a href="#">Training</a></li>
+        <li class="link"><a href="#" class="btn-login">
+            <img src="{% static 'images/bell.png' %}"
+                 style="height: 28px; width: 29px; padding-top: 2px; padding-top:-4px;" alt="Notification Bell"></a>
+        </li>
+
+    </ul>
+    <a href="{% url 'logout' %}">
+        <button class="btn">Logout</button>
+    </a>
+</nav>
+<br><br>
+<!--  -->
+<div class="overlay">
+    <div class="loginform">
+    <span class="close">&times;</span>
+        <h2>Recent Notifications</h2>
+        <hr>
+        <br>
+            {% if notif %}
+                {% for notification in notif %}
+                    <p>{{ notification.content }}</p>
+        <hr>
+                {% endfor %}
+            {% else %}
+                <p>No new notifications</p>
+            {% endif %}
+    </div>
+</div>
+<!--  -->
+
+
+<div class="wow">
+    <div class="side-box">
+        <div class="card-image">
+            <img src="./images/Doc1.webp" class="card-img" alt="">
         </div>
-        <ul class="nav-link">
-            <li class="link"><a href="{% url 'index' %}">Home</a></li>
-            <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
-            <li class="link"><a href="{% url 'sessions' %}">Service</a></li>
-            <li class="link"><a href="#">About</a></li>
-            <li class="link"><a href="#">Reviews</a></li>
-            <li class="link"><a href="#">Training</a></li>
-            <li class="link"><a href="#" id="notif-btn" onclick="">
-                    <img src="{% static 'images/bell.png' %}" alt="Notification Bell"></a></li>
-
-        </ul>
-        <a href="{% url 'logout' %}"><button class="btn">Logout</button></a>
-    </nav>
-    <br><br>
-
-<!--    <div class="overlay">-->
-
-<!--    <div class="loginform">-->
-<!--        <span class="close">&times;</span>-->
-<!--        <form>-->
-<!--            <div>-->
-<!--                <label for="">Username</label>-->
-<!--                <input type="text">-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <label for="">Password</label>-->
-<!--                <input type="text">-->
-<!--            </div>-->
-<!--            <button>Login</button>-->
-<!--        </form>-->
-<!--    </div></div>-->
-
-    <div class="wow">
-        <div class="side-box">
-            <div class="card-image">
-                <img src="./images/Doc1.webp" class="card-img" alt="">
-            </div>
-            <div class="list">
-                <a href="#about">
-                    <div>About</div>
-                </a>
-                <a href="#booked-sess">
-                    <div>Sessions</div>
-                </a>
-                <a href="#about">
-                    <div>Update</div>
-                </a>
-                <a href="#about">
-                    <div>Reviews</div>
-                </a>
-            </div>
+        <div class="list">
+            <a href="#about">
+                <div>About</div>
+            </a>
+            <a href="#booked-sess">
+                <div>Sessions</div>
+            </a>
+            <a href="#about">
+                <div>Update</div>
+            </a>
+            <a href="#about">
+                <div>Reviews</div>
+            </a>
         </div>
+    </div>
 
-        <div class="adjust"><br>
-            <div style="margin-top:5px; margin-left: 350px;" id="about">
-                <h1>User Profile</h1>
-            </div>
-            <br><br>
-            <div class="middle-box">
-                <div class="profile-info">
-                    <div class="profile-info1">
-                        <div style="display: flex;">
-                            <h4>Name: </h4> {{ user.username }}
-                        </div>
-                        <div style="display: flex;">
-                            <h4>Contact:</h4>{{ user.patient.phone_no }}
-                        </div>
-                        <div style="display: flex;">
-                            <h4>Email:</h4> {{ user.patient.user.email }}</div>
-                        <div>
-                            <h4>Gender: </h4><em>{{ user.patient.gender }}</em>
-                        </div>
-                        <div>
-                            <h4>Date of Birth: </h4><em>{{ user.patient.dob }}</em>
-                        </div>
+    <div class="adjust"><br>
+        <div style="margin-top:5px; margin-left: 350px;" id="about">
+            <h1>User Profile</h1>
+        </div>
+        <br><br>
+        <div class="middle-box">
+            <div class="profile-info">
+                <div class="profile-info1">
+                    <div style="display: flex;">
+                        <h4>Name: </h4> {{ user.username }}
+                    </div>
+                    <div style="display: flex;">
+                        <h4>Contact:</h4>{{ user.patient.phone_no }}
+                    </div>
+                    <div style="display: flex;">
+                        <h4>Email:</h4> {{ user.patient.user.email }}
+                    </div>
+                    <div>
+                        <h4>Gender: </h4><em>{{ user.patient.gender }}</em>
+                    </div>
+                    <div>
+                        <h4>Date of Birth: </h4><em>{{ user.patient.dob }}</em>
                     </div>
                 </div>
             </div>
-            <div id="booked-sess" style="margin-left: 330px; margin-top: 10px;">
-                <h1>Booked Sessions</h1>
-            </div>
-         <div class="bs">
+        </div>
+        <div id="booked-sess" style="margin-left: 330px; margin-top: 10px;">
+            <h1>Booked Sessions</h1>
+        </div>
+        <div class="bs">
             {% for booked_session in booked_sessions %}
             <div class="bst">
                 <div class="bst-content">
-                    <h3>{{ booked_session.session_type }}</h3>
                     <h4>Therapist: {{ booked_session.therapist.user.username }}</h4>
+                    <h3>Session Type: {{ booked_session.session_type }}</h3>
                     <h4>Date:</h4>
                     <h5>{{ booked_session.selected_time|date:"d-M-Y" }}</h5>
-                    <h6>Timing: {{ booked_session.selected_time|time:"h:i" }} - {{ booked_session.selected_time|time:"h:i" }}</h6>
+                    <h6>Timing: {{ booked_session.selected_time|time:"h:i" }} - {{
+                        booked_session.selected_time|time:"h:i" }}</h6>
                 </div>
                 <div>
-                        <form method="post" action="">
-                            {% csrf_token %}
-                            <button id="bokey" type="submit">Cancel</button>
-                        </form>
-                    </div>
+
+                    <button id="bokey" type="submit">Cancel</button>
+
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
-    <div id="notification-overlay" class="overlay">
-    <span class="close" onclick="closeNotificationOverlay()">&times;</span>
-    <div class="notification-content">
-        <h2>New Booked Session</h2>
-        {% if newest_booked_session %}
-            <p>Session</p>
-            <p>Booked by {{ newest_booked_session.patient.user.username }}</p>
-            <p>Date: {{ newest_booked_session.selected_time|date:"d-M-Y" }}</p>
-            <p>Timing: {{ newest_booked_session.selected_time|time:"h:i" }} - {{ newest_booked_session.selected_time_end|time:"h:i" }}</p>
+</div>
+<div class="overlay">
+    <div class="loginform">
+        <span class="close" onclick="closeNotificationOverlay()">&times;</span>
+        <h2>Recent Notifications</h2>
+        {% if notif %}
+            {% for notification in notif %}
+                <p {% if not notification.is_read %} class="unread" {% endif %}>{{ notification.content }}</p>
+            {% endfor %}
         {% else %}
             <p>No new notifications</p>
         {% endif %}
     </div>
 </div>
+<script>
+    function closeNotificationOverlay() {
+        // Make an AJAX request to mark notifications as read
+        fetch('/mark-notifications-as-read/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Close the overlay
+                document.querySelector('.overlay').style.display = 'none';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
 
-    <br>
+<br>
 
-    <footer class="sec-p1">
-        <div class="c1">
-            <img style="width: 16%;" src="./images/clinic.png" alt="logo">
-            <h3>Contact</h3>
-            <p><Strong>Telephone:</strong>0900-78601</p>
-            <p><strong>Address</strong> Street California , USA</p>
-            <h2>Social Sites</h2>
-            <div class="social">
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-twitter"></i>
-                <i class="fab fa-youtube"></i>
-            </div>
+<footer class="sec-p1">
+    <div class="c1">
+        <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+        <h3>Contact</h3>
+        <p><Strong>Telephone:</strong>0900-78601</p>
+        <p><strong>Address</strong> Street California , USA</p>
+        <h2>Social Sites</h2>
+        <div class="social">
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-youtube"></i>
         </div>
+    </div>
 
-        <div class="c1">
-            <h3>About</h3>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Rules & Regulations</a>
-        </div>
+    <div class="c1">
+        <h3>About</h3>
+        <a href="#">About Us</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Rules & Regulations</a>
+    </div>
 
-        <div class="c1">
-            <h3>My Account</h3>
-        <a href="{% url 'logout' %}"><button class="btn">Logout</button></a>
-            <a href="#">MyAppointments</a>
-            <a href="#">Help</a>
-        </div>
-    </footer>
-
+    <div class="c1">
+        <h3>My Account</h3>
+        <a href="{% url 'logout' %}">
+            <button class="btn">Logout</button>
+        </a>
+        <a href="#">MyAppointments</a>
+        <a href="#">Help</a>
+    </div>
+</footer>
 </body>
 <script src="{% static 'app.js' %}"></script>
 </html>
