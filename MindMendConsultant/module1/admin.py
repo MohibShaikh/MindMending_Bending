@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Patient, Therapist, Sessions, PatientFeedback, TherapistFeedback, BookedSession, ComplainForm, \
-    CustomerReport
+    CustomerReport, Notification
 
 admin.site.register(Patient)
 admin.site.register(Therapist)
@@ -10,3 +10,4 @@ admin.site.register(TherapistFeedback)
 admin.site.register(BookedSession)
 admin.site.register(ComplainForm)
 admin.site.register(CustomerReport)
+admin.site.register(Notification)

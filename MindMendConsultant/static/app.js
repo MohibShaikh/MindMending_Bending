@@ -1,68 +1,51 @@
-function showModal(overlayClass, formClass) {
-    document.querySelector(`.${overlayClass}`).classList.add('showoverlay1');
-    document.querySelector(`.${formClass}`).classList.add('showloginform1');
+function ShowModal(){
+    document.querySelector('.overlay').classList.add('showoverlay');
+    document.querySelector('.loginform').classList.add('showloginform');
 }
-
-function closeModal(overlayClass, formClass) {
-    document.querySelector(`.${overlayClass}`).classList.remove('showoverlay1');
-    document.querySelector(`.${formClass}`).classList.remove('showloginform1');
+function CloseModal(){
+    document.querySelector('.overlay').classList.remove('showoverlay');
+    document.querySelector('.loginform').classList.remove('showloginform');
 }
+var btnlogin=document.querySelector('.btn-login');
+btnlogin.addEventListener("click", ShowModal)
 
-function showConfirmationOverlay(facilityName) {
-    // Check if the user is authenticated
-    var isAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+var c=document.querySelector('.close');
+c.addEventListener("click", CloseModal)
 
-    // If user is authenticated, show overlay and ask for confirmation
-    if (isAuthenticated) {
-        var confirmation = confirm("Are you sure you want to book " + facilityName + "?");
 
-        // If confirmed, redirect based on the user's choice
-        if (confirmation) {
-            window.location.href = "{% url 'index' %}";
-        }
-    } else {
-        // If not authenticated, redirect to the authentication page
-        window.location.href = "{% url 'auth' %}";
-    }
+
+function ShowModal1(){
+    document.querySelector('.overlay1').classList.add('showoverlay1');
+    document.querySelector('.bookform').classList.add('showbookform');
 }
-
-var closeBtn1 = document.querySelector('.close1');
-closeBtn1.addEventListener("click", function () {
-    closeModal('overlay1', 'bookform');
-});
-
-var btnLogin = document.querySelector('.btn-login');
-btnLogin.addEventListener("click", function () {
-    showModal('overlay', 'loginform');
-});
-
-var closeBtn = document.querySelector('.close');
-closeBtn.addEventListener("click", function () {
-    closeModal('overlay', 'loginform');
-});
-//var btnNotifi = document.querySelector('#notif-btn')
-//btnNotifi.addEventListener("click", function () {
-//    closeModal('overlay', 'loginform');
-});
-var btnLogin1 = document.querySelector('.btn-login1');
-btnLogin1.addEventListener("click", function () {
-    showModal('overlay1', 'bookform');
-});
-
-var closeBtn1 = document.querySelector('.close1');
-closeBtn1.addEventListener("click", function () {
-    closeModal('overlay1', 'bookform');
-});
-var closeBtnOverlay = document.querySelector('.close');
-closeBtnOverlay.addEventListener("click", function () {
-    closeModal('overlay', 'loginform');
-})
-function openNotificationOverlay() {
-    var overlay = document.getElementById('notification-overlay');
-    overlay.style.display = 'block';
+function CloseModal1(){
+    document.querySelector('.overlay1').classList.remove('showoverlay1');
+    document.querySelector('.bookform').classList.remove('showbookform');
 }
+var btnlogin1=document.querySelector('.btn-login1');
+btnlogin1.addEventListener("click", ShowModal1)
 
-function closeNotificationOverlay() {
-    var overlay = document.getElementById('notification-overlay');
-    overlay.style.display = 'none';
-}
+var c2=document.querySelector('.close1');
+c2.addEventListener("click", CloseModal1)
+
+const sign_in_btn=document.querySelector("#sign-in-btn");
+const sign_up_btn=document.querySelector("#sign-up-btn");
+const container=document.querySelector(".container");
+const sign_in_btn2=document.querySelector("#sign-in-btn2");
+const sign_up_btn2=document.querySelector("#sign-up-btn2");
+
+sign_up_btn.addEventListener("click",()=>{
+    container.classList.add("sign-up-mode");
+});
+
+sign_in_btn.addEventListener("click",()=>{
+    container.classList.remove("sign-up-mode");
+});
+
+sign_up_btn2.addEventListener("click",()=>{
+    container.classList.add("sign-up-mode2");
+});
+
+sign_in_btn2.addEventListener("click",()=>{
+    container.classList.remove("sign-up-mode2");
+});
