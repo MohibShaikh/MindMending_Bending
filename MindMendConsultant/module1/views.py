@@ -246,11 +246,13 @@ def login_view(request):
             # Check if the user is a therapist
             if hasattr(user, 'therapist'):
                 therapist = user.therapist
+                recent_notifications = Notification.objects.filter(user=user, is_read=False)[:10]
                 booked_sessions = BookedSession.objects.filter(therapist=therapist)
                 context = {
                     'therapist': therapist,
                     'booked_sessions': booked_sessions,
-                    'is_patient': False
+                    'is_patient': False,
+                    'notif':recent_notifications,
                 }
                 return render(request, 'userprofile.html', context)
 

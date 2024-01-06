@@ -37,15 +37,18 @@
 
 <div class="overlay">
     <div class="loginform">
-        <span class="close">&times;</span>
+    <span class="close">&times;</span>
         <h2>Recent Notifications</h2>
-        {% if recent_notifications %}
-            {% for notification in recent_notifications %}
-                <p>{{ notification.content }}</p>
-            {% endfor %}
-        {% else %}
-            <p>No new notifications</p>
-        {% endif %}
+        <hr>
+        <br>
+            {% if notif %}
+                {% for notification in notif %}
+                    <p>{{ notification.content }}</p>
+        <hr>
+                {% endfor %}
+            {% else %}
+                <p>No new notifications</p>
+            {% endif %}
     </div>
 </div>
 <!-- <div style="margin-top: 150px; margin-left: 450px;"><h1>User Profile</h1></div> -->
