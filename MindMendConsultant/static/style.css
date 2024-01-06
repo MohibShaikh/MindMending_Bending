@@ -534,7 +534,6 @@ nav {
 /* Modal */
 .btn-login {
   padding: 10px 15px;
-  background-color: black;
   color: white;
   cursor: pointer;
 }
@@ -903,7 +902,10 @@ form .btn {
   height: 100%;
 }
 
-
+.unread {
+    /* Add appropriate styling for unread notifications */
+    font-weight: bold;
+}
 /* Therapist */
 .formating{
   display: flex;

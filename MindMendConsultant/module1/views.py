@@ -5,9 +5,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-from module1.models import Patient, Therapist, Sessions, BookedSession
+from module1.models import Patient, Therapist, Sessions, BookedSession, Notification
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -127,7 +128,17 @@ def booking(request, therapist_id):
         selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
         # print(selected_time)
         payment_method = request.POST.get('payment_method', 'nayapay')
-        notification_text = f"New session booked by patient {patient.user.username} on {selected_time}."
+        # Create a notification for the therapist
+        therapist_notification = Notification.objects.create(
+            user=therapist.user,
+            content=f"New session booked by patient {patient.user.username},/n on {selected_time}."
+        )
+
+        # Create a notification for the patient (optional)
+        patient_notification = Notification.objects.create(
+            user=patient.user,
+            content=f"Session booked with therapist {therapist.user.username},/n on {selected_time}."
+        )
 
 
         booked_session = BookedSession.objects.create(
@@ -136,8 +147,7 @@ def booking(request, therapist_id):
             session_type=session_type,
             amount=amount,
             selected_time=selected_time,
-            payment_method=payment_method,
-            notification = notification_text
+            payment_method=payment_method
         )
 
         # Update therapist earnings
@@ -165,6 +175,16 @@ def send_email_to_therapist(therapist, booked_session, selected_time_str):
 
     send_mail(subject, message, from_email, [to_email])
 
+
+def mark_notifications_as_read(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        user = request.user
+        # Mark all notifications as read for the current user
+        Notification.objects.filter(user=user).update(is_read=True)
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'})
+
+#
 def send_email_to_patient(patient, booked_session, selected_time_str):
     selected_time=selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
     subject = 'Session Booked Confirmation'
@@ -198,12 +218,15 @@ def auth(request):
 
 
 def profile(request):
-    user = request.user  # Get the logged-in user
+    user = request.user
+    recent_notifications = Notification.objects.filter(user=user, is_read=False)[:10]
     patient = user.patient
     print(patient)
     booked_sessions = patient.bookedsession_set.all()
     print(user)
-    context = {'user': user, 'booked_sessions': booked_sessions}
+    # for i in recent_notifications:
+    #     print(i.content)
+    context = {'user': user, 'booked_sessions': booked_sessions,'notif':recent_notifications}
     print(context)
     return render(request, 'patient_profile.html', context)
 
@@ -258,7 +281,8 @@ def register_patient(request):
         phone_no = request.POST['phone_no']
         print(f'Extracted Date: {dob}')
         password = request.POST['password']
-
+        message = 'We thank you for choosing us. Welcome onboard to your ever improvement journey oof mental health.'
+        send_mail('MindMend Consultant',message,[email],fail_silently=False)
         # Create a User
         user = User.objects.create_user(username=username, email=email, password=password)
         print(user.username, user.email, user.password)

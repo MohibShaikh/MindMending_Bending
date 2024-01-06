@@ -14,6 +14,7 @@ urlpatterns = [
     path('register_patient/', views.register_patient, name='register_patient'),
     path('training/', views.training, name='training'),
     path('book/<int:therapist_id>/', views.booking, name='book'),
+    path('mark-notifications-as-read/', views.mark_notifications_as_read, name='mark_notifications_as_read'),
     # path('book_session/<int:session_id>/', views.book_session, name='book_session'),
     # path('paypal-return/', views.paypal_return, name='paypal-return'),
     # path('paypal-cancel/', views.paypal_cancel, name='paypal-cancel'),
