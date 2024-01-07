@@ -44,11 +44,11 @@ class Sessions(models.Model):
 class PatientFeedback(models.Model):
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    answer1 = models.IntegerField()
-    answer2 = models.IntegerField()
-    answer3 = models.IntegerField()
-    answer4 = models.IntegerField()
-    answer5 = models.IntegerField()
+    answer1 = models.TextField()
+    answer2 = models.TextField()
+    answer3 = models.TextField()
+    answer4 = models.TextField()
+    answer5 = models.TextField()
 
 
 class TherapistFeedback(models.Model):

@@ -1,0 +1,112 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  margin: 20px;
+  background-color: #f5f5f5;
+}
+
+h1 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+  margin: 0 auto; /* Center the table */
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+#problem_start_other {
+  width: 50%; /* Sets the width to half the parent element */
+  max-width: 150px; /* Sets a maximum width to prevent excessive stretching */
+}
+
+td:first-child {
+  text-align: right;
+  width: 25%; /* Adjust width for labels */
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 150px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+p {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.signature-line {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  table {
+    width: 100%; /* Stretch table to full width */
+  }
+  th, td {
+    font-size: 12px; /* Adjust font size for smaller screens */
+  }
+  td:first-child {
+    width: 30%; /* Adjust label width for smaller screens */
+  }
+  textarea {
+    height: 100px; /* Adjust text area height for smaller screens */
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  /* Additional adjustments if needed for even smaller screens */
+}
+/* Base styles (same as before) */
+
+/* Media queries (same as before) */
+
+/* Flexbox for form layout */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center elements vertically */
+}
+
+table {
+  width: 100%;
+  margin-bottom: 20px; /* Add spacing below table */
+}
+
+/* Grid for signature lines */
+.signature-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Divide into two columns */
+  grid-gap: 10px; /* Add spacing between columns */
+}
+
+.signature-line {
+  text-align: center; /* Center text within signature lines */
+}
