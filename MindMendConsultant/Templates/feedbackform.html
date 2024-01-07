@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Patient Information Form</title>
-	<link href="PIF.css" rel="stylesheet" type="text/css" />
+	<link href="feedbackform.css" rel="stylesheet" type="text/css" />
 </head>
 <body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="14.1148.0" data-new-gr-c-s-loaded="14.1148.0"><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
 <div style="background: rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); padding: 5px 10px; text-align: center;"><span style="font-size:22px;">Patient Information Form</span></div>
@@ -50,6 +50,30 @@
 			</td>
 			<td style="text-align: center;">
 			<p><label><input name="surgery" type="radio" value="no" /> No</label> <label><input name="surgery" type="radio" value="yes" /> Yes</label> <label><input name="surgery" type="radio" value="yes_date" /> Yes, Date of Surgery: <input name="surgery_date" type="date" /></label></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+			<p>What do you feel?</p>
+			</td>
+			<td colspan="3">
+			<p style="text-align: center;"><label><input name="cause" type="radio" value="car_accident" /> Better</label> <label><input name="cause" type="radio" value="work_injury" /> Same</label> <label><input name="cause" type="radio" value="gradual_onset" /> Restless</label></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+			<p>Did anything come up in our session that you didn’t expect?</p>
+			</td>
+			<td colspan="3">
+			<p style="text-align: center;"><label><input name="cause" type="radio" value="car_accident" />Yes</label> <label><input name="cause" type="radio" value="work_injury" /> No</label></p>
+			</td>
+		</tr>
+			<tr>
+			<td style="text-align: center;">
+			<p>Have your symptoms gotten better or worse?</p>
+			</td>
+			<td colspan="3">
+			<p style="text-align: center;"><label><input name="cause" type="radio" value="car_accident" />Yes</label> <label><input name="cause" type="radio" value="work_injury" /> No</label></p>
 			</td>
 		</tr>
 	</tbody>
