@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: #00b894;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

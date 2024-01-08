@@ -601,3 +601,41 @@ def feedback_form_view(request):
     else:
         # No booked sessions, handle accordingly (e.g., show a message)
         return render(request, 'no_booked_sessions.html')
+
+def cancel_booking(request, session_id):
+    if request.method == 'POST' and request.is_ajax():
+        # Assuming you have a BookedSession model
+        booked_session = get_object_or_404(BookedSession, id=session_id)
+
+        # Send a notification to the therapist
+        therapist_notification = Notification.objects.create(
+            user=booked_session.therapist.user,
+            content=f"The patient has canceled the session on {booked_session.selected_time}."
+        )
+
+        # Delete the booked session
+        booked_session.delete()
+
+
+def cancel_booking(request):
+    booking_id = request.POST.get('booking_id')
+
+    try:
+        booked_session = BookedSession.objects.get(id=booking_id)
+        # Perform your cancellation logic here
+        booked_session.delete()
+
+        # Notify the therapist about the cancellation
+        therapist_notification = Notification.objects.create(
+            user=booked_session.therapist.user,
+            content=f"Patient {booked_session.patient.user.username} canceled the session on {timezone.now()}."
+        )
+
+        # Assuming cancellation was successful
+        return redirect('patient_profile')
+    except BookedSession.DoesNotExist:
+        # Handle the case where the booking does not exist
+        return render(request, 'error_404.html')
+
+    # Handle other exceptions or errors as needed
+    return render(request, 'error_404.html')
