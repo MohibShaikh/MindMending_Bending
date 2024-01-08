@@ -1,14 +1,17 @@
 # views.py
-from datetime import datetime, date,timedelta
+from datetime import datetime, date, timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.utils import timezone
 from django.contrib.auth.models import User
 from module1.models import Patient, Therapist, Sessions, BookedSession, Notification
+from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import JsonResponse
+
 
 # Create your views here.
 def index(request):
@@ -82,6 +85,7 @@ def training(request):
 def report_gen(request):
     return render(request, 'gen_report.html')
 
+
 # Working one
 # def booking(request, therapist_id):
 #     therapist = Therapist.objects.get(pk=therapist_id)
@@ -118,11 +122,11 @@ def report_gen(request):
 def booking(request, therapist_id):
     therapist = Therapist.objects.get(pk=therapist_id)
     session_id = request.GET.get('session_id')
+    session_type = request.POST.get('session_type')
 
     if request.method == 'POST':
         # Process the form data and save the booked session
         patient = request.user.patient  # Assuming the logged-in user is a patient
-        session_type = request.POST.get('session_type')
         amount = 9000
         selected_time_str = request.POST.get('time_slot')
         selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
@@ -140,7 +144,6 @@ def booking(request, therapist_id):
             content=f"Session booked with therapist {therapist.user.username},/n on {selected_time}."
         )
 
-
         booked_session = BookedSession.objects.create(
             therapist=therapist,
             patient=patient,
@@ -155,12 +158,22 @@ def booking(request, therapist_id):
         therapist.save()
 
         # Send email notifications
-        send_email_to_therapist(therapist, booked_session,selected_time_str=selected_time_str)
-        send_email_to_patient(patient, booked_session,selected_time_str=selected_time_str)
+        send_email_to_therapist(therapist, booked_session, selected_time_str=selected_time_str)
+        send_email_to_patient(patient, booked_session, selected_time_str=selected_time_str)
 
         return render(request, 'patient_profile.html', {'booked_sessions': [booked_session]})
+    next_three_days = [timezone.now() + timezone.timedelta(days=i) for i in range(3)]
+    context = {
+        'therapist': therapist,
+        'next_three_days': next_three_days,
+        'time_slots': ['10:00 AM', '02:00 PM', '05:00 PM', '08:00 PM'],
+        'session_type': session_type,
 
-    return render(request, 'Book.html', {'therapist': therapist})
+    }
+
+
+    return render(request, 'Book.html', context)
+
 
 def send_email_to_therapist(therapist, booked_session, selected_time_str):
     subject = 'New Session Booked'
@@ -184,15 +197,17 @@ def mark_notifications_as_read(request):
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
 
+
 #
 def send_email_to_patient(patient, booked_session, selected_time_str):
-    selected_time=selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
+    selected_time = selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
     subject = 'Session Booked Confirmation'
     message = f"Dear {patient.user.username},\n\nYour session has been booked successfully.\n\nTherapist: {booked_session.therapist.user.username}\nDate: {selected_time.strftime('%d-%b-%Y')}\n\nTiming: {booked_session.selected_time.strftime('%H:%M')} - {selected_time.strftime('%H:%M')}\n\nThank you for choosing our service!"
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = patient.user.email
 
     send_mail(subject, message, from_email, [to_email])
+
 
 # def auth(request):
 #     return render(request,"auth.html")
@@ -226,11 +241,12 @@ def profile(request):
     print(user)
     # for i in recent_notifications:
     #     print(i.content)
-    context = {'user': user, 'booked_sessions': booked_sessions,'notif':recent_notifications}
+    context = {'user': user, 'booked_sessions': booked_sessions, 'notif': recent_notifications}
     print(context)
     return render(request, 'patient_profile.html', context)
 
 
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -246,13 +262,13 @@ def login_view(request):
             # Check if the user is a therapist
             if hasattr(user, 'therapist'):
                 therapist = user.therapist
-                recent_notifications = Notification.objects.filter(user=user, is_read=False)[:10]
+                recent_notifications = Notification.objects.filter(user=user, is_read=False)[:3]
                 booked_sessions = BookedSession.objects.filter(therapist=therapist)
                 context = {
                     'therapist': therapist,
                     'booked_sessions': booked_sessions,
                     'is_patient': False,
-                    'notif':recent_notifications,
+                    'notif': recent_notifications,
                 }
                 return render(request, 'userprofile.html', context)
 
@@ -271,8 +287,8 @@ def login_view(request):
 
         else:
             messages.error(request, 'Invalid login credentials.')
-
-    return redirect('/')
+            return redirect('auth/')
+    return redirect('auth/')
 
 
 def register_patient(request):
@@ -288,7 +304,7 @@ def register_patient(request):
         print(f'Extracted Date: {dob}')
         password = request.POST['password']
         message = 'We thank you for choosing us. Welcome onboard to your ever improvement journey oof mental health.'
-        send_mail('MindMend Consultant',message,[email],fail_silently=False)
+        send_mail('MindMend Consultant', message, [email], fail_silently=False)
         # Create a User
         user = User.objects.create_user(username=username, email=email, password=password)
         print(user.username, user.email, user.password)
@@ -301,6 +317,7 @@ def register_patient(request):
         return redirect('service')
 
     return render(request, 'auth.html')
+
 
 # Configure the PayPal SDK with your client ID and secret
 # import paypalrestsdk
@@ -512,3 +529,32 @@ def register_patient(request):
 # def paypal_cancel(request):
 #     messages.info(request, 'Payment canceled.')
 #     return redirect('index')  # Redirect to the home page or another appropriate page
+
+def feedback_form_view(request):
+    questions = [
+        {
+            'question': 'How would you rate your overall satisfaction with the session?',
+            'options': ['Excellent', 'Good', 'Average', 'Poor'],
+        },
+        {
+            'question': 'What specific aspects of the session did you find most helpful?',
+            'options': ["Therapist's approach", 'Session topics', 'Techniques used', 'Other'],
+        },
+        {
+            'question': 'Were there any challenges or concerns during the session?',
+            'options': ['Yes', 'No'],
+        },
+        {
+            'question': 'How well did the therapist address your needs and concerns?',
+            'options': ['Excellent', 'Good', 'Average', 'Poor'],
+        },
+        {
+            'question': 'Do you feel more positive or optimistic after the session?',
+            'options': ['Positive', 'Optimistic'],
+        },
+        {
+            'question': 'What topics or issues would you like to focus on in future sessions?',
+            'options': [],
+        },
+    ]
+    return render(request, 'feedback_form.html', {'questions': questions})

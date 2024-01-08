@@ -57,7 +57,7 @@
 <div class="wow">
     <div class="side-box">
         <div class="card-image">
-            <img src="./images/Doc1.webp" class="card-img" alt="">
+            <img src="{% static 'images/Doc1.webp' %}/" class="card-img" alt="">
         </div>
         <div class="list">
             <a href="#about">
@@ -66,8 +66,8 @@
             <a href="#booked-sess">
                 <div>Sessions</div>
             </a>
-            <a href="#about">
-                <div>Update</div>
+            <a href="{% url 'feedback_form' %}">
+                <div>Feedback (Last Session)</div>
             </a>
             <a href="#about">
                 <div>Reviews</div>
