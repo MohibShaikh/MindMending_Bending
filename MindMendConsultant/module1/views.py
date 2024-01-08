@@ -171,7 +171,6 @@ def booking(request, therapist_id):
 
     }
 
-
     return render(request, 'Book.html', context)
 
 
@@ -531,30 +530,74 @@ def register_patient(request):
 #     return redirect('index')  # Redirect to the home page or another appropriate page
 
 def feedback_form_view(request):
-    questions = [
-        {
-            'question': 'How would you rate your overall satisfaction with the session?',
-            'options': ['Excellent', 'Good', 'Average', 'Poor'],
-        },
-        {
-            'question': 'What specific aspects of the session did you find most helpful?',
-            'options': ["Therapist's approach", 'Session topics', 'Techniques used', 'Other'],
-        },
-        {
-            'question': 'Were there any challenges or concerns during the session?',
-            'options': ['Yes', 'No'],
-        },
-        {
-            'question': 'How well did the therapist address your needs and concerns?',
-            'options': ['Excellent', 'Good', 'Average', 'Poor'],
-        },
-        {
-            'question': 'Do you feel more positive or optimistic after the session?',
-            'options': ['Positive', 'Optimistic'],
-        },
-        {
-            'question': 'What topics or issues would you like to focus on in future sessions?',
-            'options': [],
-        },
-    ]
-    return render(request, 'feedback_form.html', {'questions': questions})
+    # Assuming the logged-in user is a patient
+    patient = request.user.patient
+
+    # Get all booked sessions for the patient
+    booked_sessions = BookedSession.objects.filter(patient=patient).order_by('selected_time')
+
+    # Check if there are any booked sessions
+    if booked_sessions:
+        # Get the earliest booked session
+        earliest_session = booked_sessions[0]
+
+        # Check if it's at least two hours since the earliest session
+        unlock_time = earliest_session.selected_time + timedelta(hours=2)
+        if timezone.now() >= unlock_time:
+            # Feedback form is unlocked, handle form submission
+            if request.method == 'POST':
+                # Process the feedback form submission
+                therapist_id = request.POST.get('therapist_id')
+                feedback_content = request.POST.get('feedback_content')
+
+                # Create a Feedback instance and save it
+                Feedback.objects.create(
+                    therapist_id=therapist_id,
+                    patient=patient,
+                    content=feedback_content
+                )
+
+                # Redirect to some success page or handle the queuing logic
+                return redirect('feedback_success')
+
+            # Render the feedback form
+            questions = [
+                {
+                    'question': 'How would you rate your overall satisfaction with the session?',
+                    'options': ['Excellent', 'Good', 'Average', 'Poor'],
+                },
+                {
+                    'question': 'What specific aspects of the session did you find most helpful?',
+                    'options': ["Therapist's approach", 'Session topics', 'Techniques used', 'Other'],
+                },
+                {
+                    'question': 'Were there any challenges or concerns during the session?',
+                    'options': ['Yes', 'No'],
+                },
+                {
+                    'question': 'How well did the therapist address your needs and concerns?',
+                    'options': ['Excellent', 'Good', 'Average', 'Poor'],
+                },
+                {
+                    'question': 'Do you feel more positive or optimistic after the session?',
+                    'options': ['Positive', 'Optimistic'],
+                },
+                {
+                    'question': 'What topics or issues would you like to focus on in future sessions?',
+                    'options': [],
+                },
+            ]
+            context = {
+                'questions': questions,
+                'earliest_session': earliest_session,
+            }
+            return render(request, 'feedback_form.html', context)
+        else:
+            # Feedback form is locked
+            context = {
+                'unlock_time': unlock_time,
+            }
+            return render(request, 'feedback_locked.html', context)
+    else:
+        # No booked sessions, handle accordingly (e.g., show a message)
+        return render(request, 'no_booked_sessions.html')
