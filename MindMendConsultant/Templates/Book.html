@@ -99,7 +99,7 @@
                 {% csrf_token %}
                 <div>
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" value="{{ user.username }}" readonly required>
                 </div>
                 <div>
                     <label for="phone_number">Phone Number</label>
@@ -111,7 +111,13 @@
                 </div>
                 <div>
                     <label for="time_slot">Time Slot</label>
-                    <input type="datetime-local" id="time_slot" name="time_slot" required>
+                    <select id="time_slot" name="time_slot" required>
+                        {% for day in next_three_days %}
+                            {% for time in time_slots %}
+                                <option value="{{ day|date:'Y-m-d' }} {{ time }}">{{ day|date:"l, F d, Y" }} {{ time }}</option>
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
                 </div>
         
                 <label for="payment_method">Choose payment method</label>
