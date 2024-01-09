@@ -119,7 +119,7 @@
                         {% endfor %}
                     </select>
                 </div>
-        
+
                 <label for="payment_method">Choose payment method</label>
                 <select id="payment_method" name="payment_method">
                     <option value="easypaisa">Easypaisa</option>
@@ -155,7 +155,7 @@
         <center>
           <h1>Reviews and Ratings</h1>
         </center>
-    
+
         <div class="sec_container review_container">
           <span><i class="ri-double-quotes-r"></i></span>
           <div class="review_content">
@@ -204,7 +204,7 @@
             <i class="fab fa-youtube"></i>
           </div>
         </div>
-    
+
         <div class="c1">
           <h3>About</h3>
           <a href="#">About Us</a>
@@ -212,34 +212,15 @@
           <a href="#">Privacy Policy</a>
           <a href="#">Rules & Regulations</a>
         </div>
-    
+
         <div class="c1">
           <h3>My Account</h3>
           <a href="#">Sign in</a>
           <a href="#">MyAppointments</a>
           <a href="#">Help</a>
         </div>
-        
-    
-    
       </footer>
 
 </body>
 <script src="{% static 'booking.js' %}"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the form and submit button
-        const bookingForm = document.getElementById('bookingForm');
-        const bookSubmit = document.getElementById('bookSubmit');
-
-        // Add an event listener to the form submission
-        bookingForm.addEventListener('submit', function(event) {
-            // Prevent the default form submission behavior
-            event.preventDefault();
-
-            // Manually submit the form using JavaScript
-            bookingForm.submit();
-        });
-    });
-</script>
 </html>
