@@ -49,7 +49,7 @@ class PatientFeedback(models.Model):
     answer3 = models.TextField()
     answer4 = models.TextField()
     answer5 = models.TextField()
-
+    is_viewed = models.BooleanField(default=False)
 
 class TherapistFeedback(models.Model):
     patient_feedback = models.OneToOneField(PatientFeedback, on_delete=models.CASCADE)

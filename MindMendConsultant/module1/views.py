@@ -5,13 +5,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
-from module1.models import Patient, Therapist, Sessions, BookedSession, Notification
+from .models import Patient, Therapist, Sessions, BookedSession, Notification, TherapistFeedback,PatientFeedback
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
-from django.http import JsonResponse
-
 
 # Create your views here.
 def index(request):
@@ -129,14 +128,21 @@ def booking(request, therapist_id):
         patient = request.user.patient  # Assuming the logged-in user is a patient
         amount = 9000
         selected_time_str = request.POST.get('time_slot')
-        selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
-        # print(selected_time)
+        print(selected_time_str)
+        selected_time = datetime.strptime(selected_time_str, "%Y-%m-%d %I:%M %p")
         payment_method = request.POST.get('payment_method', 'nayapay')
+
+        # Print statements for debugging
+        print(f"Therapist ID: {therapist_id}")
+        print(f"Session Type: {session_type}")
+        print(f"Selected Time: {selected_time}")
+        print(f"Payment Method: {payment_method}")
         # Create a notification for the therapist
         therapist_notification = Notification.objects.create(
             user=therapist.user,
             content=f"New session booked by patient {patient.user.username},/n on {selected_time}."
         )
+
 
         # Create a notification for the patient (optional)
         patient_notification = Notification.objects.create(
@@ -156,10 +162,11 @@ def booking(request, therapist_id):
         # Update therapist earnings
         therapist.earnings += booked_session.amount
         therapist.save()
-
+        patient_notification.save()
+        therapist_notification.save()
         # Send email notifications
-        send_email_to_therapist(therapist, booked_session, selected_time_str=selected_time_str)
-        send_email_to_patient(patient, booked_session, selected_time_str=selected_time_str)
+        send_email_to_therapist(therapist, booked_session, selected_time_str=selected_time)
+        send_email_to_patient(patient, booked_session, selected_time_str=selected_time)
 
         return render(request, 'patient_profile.html', {'booked_sessions': [booked_session]})
     next_three_days = [timezone.now() + timezone.timedelta(days=i) for i in range(3)]
@@ -176,7 +183,7 @@ def booking(request, therapist_id):
 
 def send_email_to_therapist(therapist, booked_session, selected_time_str):
     subject = 'New Session Booked'
-    selected_time = selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
+    selected_time = selected_time_str
     message = f"Dear {therapist.user.username},\n\n" \
               f"Patient: {booked_session.patient.user.username}\n" \
               f"Date: {booked_session.selected_time.strftime('%d-%b-%Y')}\n" \
@@ -199,7 +206,7 @@ def mark_notifications_as_read(request):
 
 #
 def send_email_to_patient(patient, booked_session, selected_time_str):
-    selected_time = selected_time = datetime.strptime(selected_time_str, "%Y-%m-%dT%H:%M")
+    selected_time = selected_time_str
     subject = 'Session Booked Confirmation'
     message = f"Dear {patient.user.username},\n\nYour session has been booked successfully.\n\nTherapist: {booked_session.therapist.user.username}\nDate: {selected_time.strftime('%d-%b-%Y')}\n\nTiming: {booked_session.selected_time.strftime('%H:%M')} - {selected_time.strftime('%H:%M')}\n\nThank you for choosing our service!"
     from_email = settings.DEFAULT_FROM_EMAIL
@@ -233,10 +240,11 @@ def auth(request):
 
 def profile(request):
     user = request.user
-    recent_notifications = Notification.objects.filter(user=user, is_read=False)[:10]
-    patient = user.patient
+
+    recent_notifications = Notification.objects.filter(user=user)[:3]
+    patient = get_object_or_404(Patient, user=user)
     print(patient)
-    booked_sessions = patient.bookedsession_set.all()
+    booked_sessions = BookedSession.objects.filter(patient=patient)
     print(user)
     # for i in recent_notifications:
     #     print(i.content)
@@ -261,7 +269,7 @@ def login_view(request):
             # Check if the user is a therapist
             if hasattr(user, 'therapist'):
                 therapist = user.therapist
-                recent_notifications = Notification.objects.filter(user=user, is_read=False)[:3]
+                recent_notifications = Notification.objects.filter(user=user)[:3]
                 booked_sessions = BookedSession.objects.filter(therapist=therapist)
                 context = {
                     'therapist': therapist,
@@ -274,7 +282,7 @@ def login_view(request):
             # Check if the user is a patient
             elif hasattr(user, 'patient'):
                 patient = user.patient
-                recent_notifications = Notification.objects.filter(user=user, is_read=False)[:10]
+                recent_notifications = Notification.objects.filter(user=user)
                 booked_sessions = BookedSession.objects.filter(patient=patient)
                 context = {
                     'patient': patient,
@@ -302,8 +310,7 @@ def register_patient(request):
         phone_no = request.POST['phone_no']
         print(f'Extracted Date: {dob}')
         password = request.POST['password']
-        message = 'We thank you for choosing us. Welcome onboard to your ever improvement journey oof mental health.'
-        send_mail('MindMend Consultant', message, [email], fail_silently=False)
+        message = 'We thank you for choosing us. Welcome onboard your ever betterment journey of mental health.'
         # Create a User
         user = User.objects.create_user(username=username, email=email, password=password)
         print(user.username, user.email, user.password)
@@ -311,6 +318,7 @@ def register_patient(request):
         patient = Patient(user=user, gender=gender, dob=dob, age=age, phone_no=phone_no)
         print(patient.gender, patient.dob)
         patient.save()
+        send_email_to_patient('MindMend Consultant', message, [email], fail_silently=False)
 
         # Redirect to a success page or login page
         return redirect('service')
@@ -602,22 +610,9 @@ def feedback_form_view(request):
         # No booked sessions, handle accordingly (e.g., show a message)
         return render(request, 'no_booked_sessions.html')
 
-def cancel_booking(request, session_id):
-    if request.method == 'POST' and request.is_ajax():
-        # Assuming you have a BookedSession model
-        booked_session = get_object_or_404(BookedSession, id=session_id)
 
-        # Send a notification to the therapist
-        therapist_notification = Notification.objects.create(
-            user=booked_session.therapist.user,
-            content=f"The patient has canceled the session on {booked_session.selected_time}."
-        )
-
-        # Delete the booked session
-        booked_session.delete()
-
-
-def cancel_booking(request):
+@require_POST
+def cancel_booking(request,booked_session_id):
     booking_id = request.POST.get('booking_id')
 
     try:
@@ -630,12 +625,35 @@ def cancel_booking(request):
             user=booked_session.therapist.user,
             content=f"Patient {booked_session.patient.user.username} canceled the session on {timezone.now()}."
         )
-
+        therapist_notification.save()
         # Assuming cancellation was successful
-        return redirect('patient_profile')
+        return redirect('profile')
     except BookedSession.DoesNotExist:
         # Handle the case where the booking does not exist
         return render(request, 'error_404.html')
 
     # Handle other exceptions or errors as needed
     return render(request, 'error_404.html')
+def therapist_feedback_queue(request):
+    # Get all patient feedback forms that haven't been viewed by therapists
+    pending_feedback = PatientFeedback.objects.filter(is_viewed=False)
+
+    context = {'pending_feedback': pending_feedback}
+    return render(request, 'therapist_feedback_form.html', context)
+
+def provide_feedback(request, feedback_id):
+    patient_feedback = get_object_or_404(PatientFeedback, pk=feedback_id, is_viewed=False)
+
+    if request.method == 'POST':
+        # Process therapist's feedback
+        description = request.POST.get('description')
+        therapist_feedback = TherapistFeedback.objects.create(
+            patient_feedback=patient_feedback,
+            therapist=request.user.therapist,  # Assuming therapist is logged in
+            description=description
+        )
+
+        return render(request, 'therapist_feedback.html')
+
+    context = {'patient_feedback': patient_feedback}
+    return render(request, 'provide_feedback.html', context)
