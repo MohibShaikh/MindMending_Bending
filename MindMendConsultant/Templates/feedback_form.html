@@ -1,30 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  {% load static %}
-  <title>Patient Feedback Form</title>
-  <link href="{% static 'feedback_form.css' %}" rel="stylesheet" type="text/css" />
-</head>
-<body>
-  <h1>Patient Feedback Form</h1>
-  <form method="post">
-    {% csrf_token %}
+<!-- feedback_form.html -->
+{% extends 'base_feedback_form.html' %}
 
-      {% for question in questions %}
-    <label for="{{ question.question|slugify }}">{{ question.question }}</label>
+{% block title %}Patient Feedback Form{% endblock %}
+{% block heading %}Patient Feedback Form{% endblock %}
 
-    {% if question.options %}
-      <select id="{{ question.question|slugify }}" name="{{ question.question|slugify }}" required>
-        {% for option in question.options %}
-          <option value="{{ option }}">{{ option }}</option>
-        {% endfor %}
-      </select><br><br>
-    {% else %}
-      <textarea id="{{ question.question|slugify }}" name="{{ question.question|slugify }}" required></textarea><br><br>
-    {% endif %}
-  {% endfor %}
+{% block content %}
+    {% for question in questions %}
+        <label for="{{ question.question|slugify }}">{{ question.question }}</label>
 
-    <input type="submit" value="Submit">
-  </form>
-</body>
-</html>
+        {% if question.options %}
+            <select id="{{ question.question|slugify }}" name="{{ question.question|slugify }}" required>
+                {% for option in question.options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select><br><br>
+        {% else %}
+            <textarea id="{{ question.question|slugify }}" name="{{ question.question|slugify }}" required></textarea><br><br>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

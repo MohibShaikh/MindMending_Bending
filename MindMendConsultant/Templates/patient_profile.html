@@ -116,9 +116,11 @@
                         booked_session.selected_time|time:"h:i" }}</h6>
                 </div>
                 <div>
-
-                    <button id="bokey" type="submit">Cancel</button>
-
+                    <form method="post" action="{% url 'cancel_booking' booked_session_id=booked_session.id %}" class="cancel-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="booking_id" value="{{ booked_session.id }}">
+                        <button type="submit">Cancel</button>
+                    </form>
                 </div>
             </div>
             {% endfor %}
