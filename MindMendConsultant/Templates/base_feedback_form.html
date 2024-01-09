@@ -1,0 +1,20 @@
+<!-- base_feedback_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <title>{% block title %}Feedback Form{% endblock %}</title>
+    <link href="{% static 'feedback_form.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>{% block heading %}Feedback Form{% endblock %}</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        {% block content %}
+        {% endblock %}
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
