@@ -1,0 +1,25 @@
+<!-- therapist_feedback_form.html -->
+{% extends 'base_feedback_form.html' %}
+
+{% block title %}Therapist Feedback Form{% endblock %}
+{% block heading %}Therapist Feedback Form{% endblock %}
+
+{% block content %}
+    {% for question in questions %}
+        <label for="{{ question.question|slugify }}">{{ question.question }}</label>
+
+        {% if question.options %}
+            <select id="{{ question.question|slugify }}" name="{{ question.question|slugify }}" required>
+                {% for option in question.options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select><br><br>
+        {% else %}
+            <textarea id="{{ question.question|slugify }}" name="{{ question.question|slugify }}" required></textarea><br><br>
+        {% endif %}
+    {% endfor %}
+
+    <!-- Add a new field for therapist's description -->
+    <label for="description">Therapist's Description:</label><br>
+    <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+{% endblock %}

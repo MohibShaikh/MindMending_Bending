@@ -1,0 +1,7 @@
+{% extends 'base_404.html' %}
+
+{% block content %}
+    <h1>Error 404</h1>
+    <p>Oops! There exists no such Booked Session</p>
+    <p>Go back to <a href="{% url 'profile' %}">homepage</a>.</p>
+{% endblock %}
