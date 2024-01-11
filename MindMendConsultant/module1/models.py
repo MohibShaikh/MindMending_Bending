@@ -1,9 +1,6 @@
-# models.py
-
-
 from django.contrib.auth.models import User
 from django.db import models
-
+from django.utils import timezone
 
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -40,23 +37,6 @@ class Sessions(models.Model):
     def __str__(self):
         return f'{self.facility}'
 
-
-class PatientFeedback(models.Model):
-    therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    answer1 = models.TextField()
-    answer2 = models.TextField()
-    answer3 = models.TextField()
-    answer4 = models.TextField()
-    answer5 = models.TextField()
-    is_viewed = models.BooleanField(default=False)
-
-class TherapistFeedback(models.Model):
-    patient_feedback = models.OneToOneField(PatientFeedback, on_delete=models.CASCADE)
-    therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
-    description = models.TextField()
-
-
 class BookedSession(models.Model):
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -64,6 +44,21 @@ class BookedSession(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     selected_time = models.DateTimeField(max_length=10, blank=True, null=True)
     payment_method = models.CharField(max_length=50, default='nayapay')
+
+
+class Feedback(models.Model):
+    therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    booked_session = models.ForeignKey(BookedSession, on_delete=models.CASCADE)
+    description = models.TextField(blank=True)
+    answer1 = models.TextField()
+    answer2 = models.TextField()
+    answer3 = models.TextField()
+    answer4 = models.TextField()
+    answer5 = models.TextField()
+    is_viewed = models.BooleanField(default=False)
+    created_at=models.DateTimeField(default=timezone.now)
+
 
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
