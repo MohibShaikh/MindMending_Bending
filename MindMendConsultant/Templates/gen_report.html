@@ -6,6 +6,12 @@
      {%load static%}
     <link rel="stylesheet" href="{%static 'report.css'%}">
     <link rel="stylesheet" href="{%static 'style.css'%}">
+    <style>form .btn {
+    margin-top: 0rem;
+    cursor: pointer;
+    width: 100%;
+    color: whitesmoke;}
+</style>
 </head>
 <body>
 
@@ -19,7 +25,12 @@
               <li class="link"><a href="/">Profile</a></li>
             <li class="link"><a href="service.html">Service</a></li>
             <li class="link"><a href="#">About</a></li>
-            <li class="link"><a href="#">Reviews</a></li>
+            <li class="link">
+                <form action="{% url 'download_pdf' %}" method="post"><button class="btn btn-login" type="submit">
+                    {% csrf_token %}
+                    Download as PDF
+                </form></button>
+            </li>
         </ul>
         <button class="btn btn-login">Login</button>
     </nav>
@@ -56,8 +67,8 @@
 
     <div class="patient-info">
         <p>Medical Record #L21751857 (CM51452202)</p>
-        <p>Patient Name: MR.Shahnawaz Dahani</p>
-        <p>Age/Gender: 44Y/ Male</p>
+        <p>Patient Name: {{ patient_name }}</p>
+        <p>Age/Gender: {{ patient_age }}Y/ Male</p>
     </div>
 
     <div class="test-results">
@@ -79,12 +90,11 @@
         </table>
 
         <div class="interpretation">
-            <p>CNS Impairment <br> Depression of CNS <br> Fatalities reported 400 mg/dl</p>
+            <p>{{ latest_feedback.answer1 }} <br> {{ latest_feedback.answer2 }} <br> {{ latest_feedback.answer3 }} <br> {{ latest_feedback.answer4 }} <br> {{ latest_feedback.answer5 }}</p>
         </div>
 
         <div class="note">
-            <p>Note: This is only a screening test. Results are to be used only for medical (i.e. treatment) purposes. Unconfirmed screening results must not be used for non-medical purposes (e.g., employment testing or legal testing).</p>
-            <p>The test is performed by Enzymatic reaction technique.</p>
+            <p>{{ latest_feedback.description }}</p>
         </div>
     </div>
 

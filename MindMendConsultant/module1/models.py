@@ -76,7 +76,6 @@ class ComplainForm(models.Model):
 class CustomerReport(models.Model):
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    assessment_observation = models.TextField()
 
     def generate_report(self):
         # Logic to generate a report based on feedback and therapist's descriptions
