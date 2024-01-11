@@ -661,7 +661,7 @@ def provide_feedback(request, feedback_id):
         therapist_description = request.POST.get('therapist_description')
 
         # Update the Feedback instance with therapist's description and set is_viewed to True
-        patient_feedback.therapist_description = therapist_description
+        patient_feedback.description = therapist_description
         patient_feedback.is_viewed = True
         patient_feedback.save()
 
