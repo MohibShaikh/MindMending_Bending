@@ -5,6 +5,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils import timezone
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
 from .models import Patient, Therapist, Sessions, BookedSession, Notification, Feedback
@@ -762,3 +765,36 @@ def feedback_view(request, feedback_id):
         'booked_session': booked_session,
     }
     return render(request, 'feedback_form.html', context)
+
+
+def view_report(request):
+    # Assuming the logged-in user is a patient
+    patient = request.user.patient
+
+    # Get the latest viewed feedback for the patient
+    latest_feedback = Feedback.objects.filter(patient=patient, is_viewed=True).latest('created_at')
+
+    context = {'latest_feedback': latest_feedback}
+    return render(request, 'gen_report.html', context)
+
+def download_pdf(request):
+    template_path = 'gen_report.html'
+    patient = request.user.patient
+    # Get the latest viewed feedback for the patient
+    latest_feedback = Feedback.objects.filter(patient=patient, is_viewed=True).latest('created_at')
+    context = {'latest_feedback': latest_feedback}
+    # Pass the data needed for the PDF
+
+    # Create a Django response object with appropriate PDF headers
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="medical_report.pdf"'
+
+    # Create a PDF object and write it to the response
+    template = get_template(template_path)
+    html = template.render(context)
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+
+    return response
