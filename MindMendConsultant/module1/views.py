@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
-from .models import Patient, Therapist, Sessions, BookedSession, Notification, TherapistFeedback,PatientFeedback
+from .models import Patient, Therapist, Sessions, BookedSession, Notification, Feedback
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
@@ -169,7 +169,7 @@ def booking(request, therapist_id):
         send_email_to_patient(patient, booked_session, selected_time_str=selected_time)
 
         return render(request, 'patient_profile.html', {'booked_sessions': [booked_session]})
-    next_three_days = [timezone.now() + timezone.timedelta(days=i) for i in range(3)]
+    next_three_days = [timezone.now() - timezone.timedelta(days=i) for i in range(3)]
     context = {
         'therapist': therapist,
         'next_three_days': next_three_days,
@@ -548,25 +548,38 @@ def feedback_form_view(request):
     if booked_sessions:
         # Get the earliest booked session
         earliest_session = booked_sessions[0]
-
         # Check if it's at least two hours since the earliest session
         unlock_time = earliest_session.selected_time + timedelta(hours=2)
         if timezone.now() >= unlock_time:
             # Feedback form is unlocked, handle form submission
             if request.method == 'POST':
-                # Process the feedback form submission
-                therapist_id = request.POST.get('therapist_id')
-                feedback_content = request.POST.get('feedback_content')
+                therapist_id = earliest_session.therapist.id
+                answer1 = request.POST.get('answer1')
+                answer2 = request.POST.get('answer2')
+                answer3 = request.POST.get('answer3')
+                answer4 = request.POST.get('answer4')
+                answer5 = request.POST.get('answer5')
 
+                # print(answer1, answer2, answer3, answer4, answer5)
+                # print(request.POST)
                 # Create a Feedback instance and save it
                 Feedback.objects.create(
                     therapist_id=therapist_id,
+                    description='',
                     patient=patient,
-                    content=feedback_content
+                    answer1=answer1,
+                    answer2=answer2,
+                    answer3=answer3,
+                    answer4=answer4,
+                    answer5=answer5,
                 )
-
                 # Redirect to some success page or handle the queuing logic
-                return redirect('feedback_success')
+                therapist_notification = Notification.objects.create(
+                    user=earliest_session.therapist.user,
+                    content=f"New feedback submitted by patient {patient.user.username}."
+                )
+                therapist_notification.save()
+                return redirect('/')
 
             # Render the feedback form
             questions = [
@@ -636,24 +649,114 @@ def cancel_booking(request,booked_session_id):
     return render(request, 'error_404.html')
 def therapist_feedback_queue(request):
     # Get all patient feedback forms that haven't been viewed by therapists
-    pending_feedback = PatientFeedback.objects.filter(is_viewed=False)
+    pending_feedback = Feedback.objects.filter(is_viewed=False)
 
     context = {'pending_feedback': pending_feedback}
     return render(request, 'therapist_feedback_form.html', context)
 
 def provide_feedback(request, feedback_id):
-    patient_feedback = get_object_or_404(PatientFeedback, pk=feedback_id, is_viewed=False)
+    patient_feedback = get_object_or_404(Feedback, pk=feedback_id, is_viewed=False)
 
     if request.method == 'POST':
         # Process therapist's feedback
         description = request.POST.get('description')
-        therapist_feedback = TherapistFeedback.objects.create(
+        therapist_feedback = Feedback.objects.create(
             patient_feedback=patient_feedback,
             therapist=request.user.therapist,  # Assuming therapist is logged in
             description=description
         )
-
+        therapist_feedback.save()
         return render(request, 'therapist_feedback.html')
 
     context = {'patient_feedback': patient_feedback}
-    return render(request, 'provide_feedback.html', context)
+    return render(request, 'therapist_feedback_form .html', context)
+
+def unviewed_feedbacks(request):
+    # Assuming the logged-in user is a patient#
+    patient = request.user.patient
+
+    # Get unviewed feedbacks for the patient
+    unviewed_feedbacks = Feedback.objects.filter(patient=patient, is_viewed=False)
+
+    context = {'unviewed_feedbacks': unviewed_feedbacks}
+    return render(request, 'base_fb.html', context)
+
+def therapist_unviewed_feedbacks(request):
+    # Assuming the logged-in user is a therapist
+    therapist = request.user.therapist
+
+    # Get unviewed feedbacks for the therapist
+    unviewed_feedbacks = Feedback.objects.filter(therapist=therapist, is_viewed=False)
+
+    context = {'unviewed_feedbacks': unviewed_feedbacks}
+    return render(request, 'therapist_unviewed_feedbacks.html', context)
+
+def feedback_view(request, feedback_id):
+    # Get the feedback object
+    patient = request.user.patient
+    feedback = Feedback.objects.get(id=feedback_id)
+    booked_session = feedback.booked_session
+    print(booked_session)
+    # Feedback form is unlocked, handle form submission
+    if request.method == 'POST':
+        therapist_id = booked_session.therapist.id
+        answer1 = request.POST.get('answer1')
+        answer2 = request.POST.get('answer2')
+        answer3 = request.POST.get('answer3')
+        answer4 = request.POST.get('answer4')
+        answer5 = request.POST.get('answer5')
+
+        # print(answer1, answer2, answer3, answer4, answer5)
+        # print(request.POST)
+        # Create a Feedback instance and save it
+        Feedback.objects.create(
+            therapist_id=therapist_id,
+            booked_session=booked_session,
+            description='',
+            patient=patient,
+            answer1=answer1,
+            answer2=answer2,
+            answer3=answer3,
+            answer4=answer4,
+            answer5=answer5,
+        )
+        # Redirect to some success page or handle the queuing logic
+        therapist_notification = Notification.objects.create(
+            user=booked_session.therapist.user,
+            content=f"New feedback submitted by patient {patient.user.username}."
+        )
+        therapist_notification.save()
+        return redirect('/')
+
+    # Render the feedback form
+    questions = [
+        {
+            'question': 'How would you rate your overall satisfaction with the session?',
+            'options': ['Excellent', 'Good', 'Average', 'Poor'],
+        },
+        {
+            'question': 'What specific aspects of the session did you find most helpful?',
+            'options': ["Therapist's approach", 'Session topics', 'Techniques used', 'Other'],
+        },
+        {
+            'question': 'Were there any challenges or concerns during the session?',
+            'options': ['Yes', 'No'],
+        },
+        {
+            'question': 'How well did the therapist address your needs and concerns?',
+            'options': ['Excellent', 'Good', 'Average', 'Poor'],
+        },
+        {
+            'question': 'Do you feel more positive or optimistic after the session?',
+            'options': ['Positive', 'Optimistic'],
+        },
+        {
+            'question': 'What topics or issues would you like to focus on in future sessions?',
+            'options': [],
+        },
+    ]
+    context = {
+        'questions': questions,
+        'booked_session': booked_session,
+    }
+    return render(request, 'feedback_form.html', context)
