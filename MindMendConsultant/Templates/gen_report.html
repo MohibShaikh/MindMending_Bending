@@ -3,135 +3,1097 @@
 <head>
     <meta charset="UTF-8">
     <title>Mind Mend Consultant Karachi - Medical Report</title>
-     {%load static%}
-    <link rel="stylesheet" href="{%static 'report.css'%}">
-    <link rel="stylesheet" href="{%static 'style.css'%}">
-    <style>form .btn {
-    margin-top: 0rem;
-    cursor: pointer;
-    width: 100%;
-    color: whitesmoke;}
-</style>
+    {%load static%}
+    <style>
+        * {
+      margin: 0;
+      padding: 0;
+    }
+    .social-text{
+        margin: 10px 0;
+        font-size: 16px;
+    }
+    .social-media{
+        display: flex;
+        justify-content: center;
+    }
+    .social-icon{
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #444;
+        border: 1px solid #444;
+        border-radius: 50px;
+        margin: 0 5px;
+    }
+    body {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      background-color: rgb(236, 255, 220);
+    }
+
+    .sec-p1 {
+      padding: 60px 90px;
+      margin: 3px 3px;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .sec_container {
+      max-width: 1140px;
+      padding: 2rem 1rem;
+      margin: auto;
+    }
+
+    .sec_header {
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      font-size: 3.25rem;
+      font-weight: 600;
+      text-align: center;
+      color: rgb(22, 123, 34);
+    }
+
+    .sec_subheader {
+      text-align: justify;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 1000px;
+      font-size: 1.25rem;
+      margin: auto;
+      /* text-align: center; */
+      color: rgb(10, 9, 11);
+    }
+
+    .sec_subheader1 {
+      max-width: 1000px;
+      font-size: 1.25rem;
+      margin: auto;
+      text-align: center;
+      color: rgb(10, 9, 11);
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      outline: none;
+      border: none;
+      font-size: 1rem;
+      color: white;
+      background-color: rgb(14, 120, 26);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 1s;
+    }
+    .btn a{
+      color: white;
+    }
+    .btn:hover {
+      background-color: rgb(83, 122, 15);
+    }
+
+    img {
+      width: 100%;
+      display: flex;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .bg_blur {
+      position: absolute;
+      box-shadow: 5 5 1000px 50px rgb(193, 43, 123);
+      z-index: -1;
+    }
+
+    nav {
+      box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.3);
+      filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+      max-width: 1150px;
+      margin: auto;
+      /* position: fixed; */
+      padding: 0.8rem 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      /* border: 3px solid greenyellow; */
+    }
+
+    .nav-logo {
+      width: 100px;
+    }
+
+    .nav-link {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 3.0rem;
+    }
+
+    .link a {
+      position: relative;
+      padding-bottom: 0.75rem;
+      color: rgb(22, 11, 11);
+    }
+
+    .link a::after {
+      content: "";
+      position: absolute;
+      height: 2px;
+      width: 0;
+      left: 0;
+      bottom: 0;
+      background-color: rgb(19, 173, 42);
+      transition: 0.3s;
+    }
+
+    .link a:hover::after {
+      width: 60%;
+    }
+
+    .header_container {
+      background-color: #D1FFBD;
+      box-shadow: 3px 3px 5px 5px rgba(182, 241, 180, 0.9);
+      /* ye baqi hai */
+      filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+      position: relative;
+      margin-left: 12em;
+      padding-left: 40px;
+      margin-top: 1rem;
+      padding-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+      gap: 2rem;
+      /* border: rgb(172, 49, 133) 1px solid; */
+    }
+
+    .header_container::before {
+      /* content: "health"; */
+      position: absolute;
+      bottom: 5rem;
+      right: 20rem;
+      font-size: 10rem;
+      font-weight: 700;
+      color: rgb(13, 14, 13);
+      opacity: 0.3;
+      line-height: 7rem;
+      z-index: -1;
+    }
+
+    .header_blur {
+      bottom: 15rem;
+      right: 0;
+    }
+
+    .header_content h4 {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgb(14, 13, 11);
+    }
+
+    .header_content h1 {
+      margin-bottom: 1rem;
+      font-size: 5rem;
+      font-weight: 700;
+      line-height: 6rem;
+      color: rgb(35, 162, 31);
+    }
+
+    .header_content h1 span {
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 1px rgb(71, 94, 9);
+    }
+
+    .header_content p {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: black;
+    }
+
+    .header_image {
+      position: relative;
+    }
+
+    .header_image::before {
+      content: '`';
+      position: absolute;
+      opacity: 0.4;
+      z-index: -1;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 40rem;
+      font-weight: 400;
+      color: rgb(5, 213, 26);
+      line-height: 20rem;
+    }
+
+    .header_image img {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .facilities_header {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .facilities_nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .facilities_nav span {
+      padding: 0 6px;
+      font-size: 1.5rem;
+      color: rgb(8, 72, 34);
+      border: 2px solid rgb(17, 6, 6);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .facilities_nav span:hover {
+      color: rgb(128, 255, 0);
+      border-color: rgb(205, 137, 12);
+    }
+
+    .facilities_grid {
+      grid-template-columns: repeat(3, 1fr);
+      display: grid;
+      gap: 2rem;
+    }
+
+    .facilities_card {
+      padding: 1rem;
+      background-color: gray;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .facilities_card:hover {
+      background-color: rgb(79, 105, 70);
+      border: 2px solid;
+      border-color: rgb(12, 117, 43);
+      transition: 0.3s;
+    }
+
+    .facilities_card span {
+      display: inline-block;
+      padding: 2px 9px;
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+      color: white;
+      background-color: rgb(26, 142, 62);
+      border-radius: 5px;
+    }
+
+    .facilities_card h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      /* color: white; */
+    }
+
+    .facilities_card p {
+      margin-bottom: 1rem;
+      color: rgb(255, 255, 255);
+    }
+
+    .facilities_card a {
+      color: white;
+      transition: 0.3s;
+    }
+
+    .facilities_card a:hover {
+      color: rgb(40, 182, 51);
+    }
+
+
+    .seemore{
+      background-color: #32d61c;
+      font-weight: 300;
+      width: 55px;
+      height: 20px;
+      margin-top: 5px;
+      margin-left: 1000px;
+      transition: .5s;
+      display: flex;
+      align-self: flex-end;
+    }
+
+    .class_container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border: 1px solid;
+      gap: 2rem;
+
+    }
+
+    .join_images {
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    .join_images img {
+      border-radius: 10px;
+    }
+
+    .join_grid {
+      position: absolute;
+      bottom: -5rem;
+      width: calc(100% - 4rem);
+      padding: 2rem;
+      margin: 0 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      background-color: rgb(126, 120, 131);
+      border-radius: 10px;
+    }
+
+    .card {
+      flex: 1 1 250px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .card span {
+      padding: 5px 12px;
+      font-size: 1.75rem;
+      color: white;
+      background-color: rgb(0, 255, 60);
+      border-radius: 5px;
+    }
+
+    .card h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: white;
+    }
+
+    .card p {
+      color: rgb(223, 219, 219);
+    }
+
+    .price_grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .price_card {
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      background-color: rgb(48, 138, 54);
+      /* background-image: url(./images/Doc1.webp); */
+      /* background-position: absolute; */
+      background-position-y: top;
+      /* background-size: -100px -100px -100px -100px; */
+      border: 2px solid black;
+      border-radius: 10px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .price_card:hover {
+      background-color: rgb(143, 161, 172);
+      border-color: green;
+      transition: 0.6s;
+    }
+
+    .price_card_content {
+      flex: 1;
+      margin-bottom: 2rem;
+    }
+
+    .price_card h4 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: black;
+    }
+
+    .price_card h3 {
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 600;
+      color: rgb(10, 9, 9);
+      border-bottom: 2px solid white;
+    }
+
+    .price_card p {
+      margin-bottom: 0.75rem;
+      color: rgb(13, 13, 13);
+    }
+
+    .price_card p i {
+      margin-right: 0.5rem;
+      font-size: 1.2rem;
+      color: rgb(11, 11, 11);
+      font-weight: 600;
+    }
+
+    .price_btn {
+      color: white;
+      position: relative;
+      background-color: transparent;
+      border: 2px solid black;
+    }
+
+    .price_btn:hover {
+      color: white;
+      background-color: black;
+    }
+
+    .review {
+      border-radius: 20px;
+      margin-top: 16px;
+      margin-left: 6px;
+      margin-bottom: 16px;
+    }
+
+    .review_container {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .review_container>span {
+      font-size: 6rem;
+      color: orange;
+      opacity: 0.5;
+    }
+
+    .review_content {
+      flex: 1;
+    }
+
+    .review_content h4 {
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: rgb(8, 6, 6);
+    }
+
+    .review_content p {
+      max-width: 800px;
+      margin-bottom: 2rem;
+      color: rgb(2, 2, 2);
+    }
+
+    .review_rating span {
+      font-size: 1.5rem;
+      color: orange;
+    }
+
+    .review_footer {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .review_member {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .review_member img {
+      max-width: 60px;
+      border-radius: 100%;
+    }
+
+    .review_member_details h4 {
+      margin-bottom: 0;
+    }
+
+    .review_arrow {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .review_arrow span {
+      font-size: 2rem;
+      color: black;
+      cursor: pointer;
+    }
+
+    /* Modal */
+    .btn-login {
+      padding: 10px 15px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0%;
+      /* z index to adjust behind  */
+      z-index: -1;
+      opacity: 0;
+      /* opacity for transparencing overlay  */
+      transition: .6s;
+    }
+
+    .showoverlay {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .loginform {
+      background: white;
+      width: 350px;
+      padding: 30px 20px;
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      /* we have to set top:+50%; in order to render loginform */
+      top: -50%;
+      /* translate 1st argument width 2nd argument height */
+      transform: translate(-50%, -50%);
+      box-shadow: 0px 0px 10px 3px #ccc;
+      transition: 1s;
+    }
+
+    .showloginform {
+      top: 50%;
+    }
+
+    .loginform input {
+      width: 100%;
+      height: 35px;
+      margin-bottom: 15px;
+    }
+
+    .loginform button {
+      background-color: black;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .loginform span {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      color: white;
+      height: 30px;
+      width: 30px;
+      background-color: green;
+      text-align: center;
+      line-height: 30px;
+      cursor: pointer;
+    }
+
+    /* Modal closed */
+
+
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      border: 1px solid;
+      border-radius: 10px;
+      background-color: #cce7d0;
+    }
+
+    footer .c1 {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      /* margin-bottom: 1px; */
+    }
+
+    footer h3 {
+      font-size: 18px;
+      padding-bottom: 9px;
+    }
+
+    footer p {
+      font-size: 19px;
+      margin: 0 0 15px 0;
+    }
+
+    footer a {
+      font-size: 15px;
+      text-decoration: none;
+      color: black;
+      margin-bottom: 20px;
+    }
+
+    footer .social i {
+      cursor: pointer;
+      padding-right: 4px;
+      color: gray;
+    }
+
+    footer .social i:hover {
+      color: rgb(255, 0, 157);
+    }
+
+    footer .c1 a:hover {
+      color: #088178;
+    }
+
+    footer .copyright {
+      width: 95%;
+      text-align: center;
+    }
+
+
+
+
+    @media (width < 900px) {
+      .nav_links {
+        display: none;
+      }
+
+      .header_container {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .header_image {
+        grid-area: 1/1/2/2;
+      }
+
+      .explore_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .class_container {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .class_image {
+        min-height: 500px;
+      }
+
+      .price_grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .review_container {
+        gap: 2rem;
+      }
+
+      .footer_container {
+        grid-template-columns: 1fr 200px;
+      }
+    }
+
+    @media (width < 600px) {
+      .facilities_header {
+        flex-direction: column;
+      }
+
+      .facilities_grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .join_container {
+        margin-bottom: 15rem;
+      }
+
+      .join_grid {
+        width: 100%;
+        margin: 0;
+        bottom: -20rem;
+      }
+
+      .price_grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .review_container {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .review_footer {
+        flex-direction: column;
+      }
+
+      .footer_container {
+        grid-template-columns: 1fr 150px;
+      }
+
+      .footer_bar {
+        text-align: center;
+      }
+    }
+
+    /* Contact form */
+    .contact h2 {
+      margin-bottom: 2rem;
+    }
+
+    .contact form {
+      max-width: 70rem;
+      margin: 1rem auto;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    form .input-box {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    form input,
+    textarea {
+      width: 100%;
+      padding: 1.3rem;
+      font-size: 1rem;
+      border: none;
+      outline: none;
+      color: rgb(12, 11, 11);
+      background: rgb(216, 210, 210);
+      border-radius: .8rem;
+      gap: 2.5rem;
+      margin: .7rem 0;
+    }
+
+    .sticky {
+      border-bottom: 1px solid rgba(0, 0, 0, .3);
+    }
+
+    form input {
+      width: 49%;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    form .btn {
+      margin-top: 2rem;
+      cursor: pointer;
+      width: 20%;
+      color: #000;
+    }
+
+    .allheading {
+      text-align: center;
+      font-size: 4.5rem;
+      color: rgb(35, 162, 31)
+    }
+
+    .sec-c {
+      min-height: 100vh;
+      padding: 4rem 9% 2rem;
+    }
+
+
+    /* Doctor info */
+    #details {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    #details .big-img {
+      width: 40%;
+      margin-right: 50px;
+    }
+
+    .sec-p1 {
+      padding: 40px 80px;
+    }
+
+    #details #product-detail {
+      width: 50%;
+    }
+
+    #details #product-detail h3 {
+      padding: 40px 0 20px 0;
+      font-size: 27px;
+    }
+
+    /* #details #product-detail input{
+      width: 50px;
+      height: 43px;
+      padding-left: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+    } */
+    /* #details #product-detail input:focus{
+      outline: none;
+    } */
+    #details #product-detail button {
+      background-color: #088178;
+      color: azure;
+      height: 45px;
+      width: 100px;
+
+    }
+
+    #details #product-detail span {
+      line-height: 25px;
+    }
+
+
+    /* doctor slider main page */
+    .card {
+      border-radius: 50%;
+    }
+
+    .card-image {
+      position: relative;
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+      padding: 3px;
+      margin-left: 45px;
+      background: #088178;
+    }
+
+    .card-image .card-img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* https: //cdn.shopify.com/s/files/1/0446/9369/files/nacon_logo_585121da-0f4c-4a44-a5fd-94a20b3240dd.jpg?v=1618404515 */
+
+    /* long banner */
+    /* #sale1 {
+      background-image: url(./images/brain4.webp);
+      width: 100%;
+      height: 40vh;
+      border: 1px solid;
+      border-radius: 50px;
+      background-size: cover;
+      /* background-position: center; */
+      /* object-fit: cover;
+      display: flex; */
+      /* flex-direction: column; */
+      /* align-items: flex-end; */
+      /* text-align: bottom; */
+      /* justify-content: center;
+      color: whitesmoke; */
+
+    #sale1{
+      width: 100%;
+      height: 35vh;
+    }
+    #sale1 img{
+      width: 100%;
+      height: 100%;
+    }
+
+    .unread {
+        /* Add appropriate styling for unread notifications */
+        font-weight: bold;
+    }
+    /* Therapist */
+    .formating{
+      display: flex;
+      justify-content: center;
+      margin-left: 30px;
+      margin-bottom: 10px;
+      width: 90%;
+      border: 1px solid;
+    }
+            form .btn {
+        margin-top: 0rem;
+        cursor: pointer;
+        width: 100%;
+        color: whitesmoke;}
+            body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .header-info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .patient-info {
+        border: 1px solid black;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .test-results {
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: left;
+    }
+
+    .interpretation {
+        margin-top: 10px;
+    }
+
+    .note {
+        font-style: italic;
+        margin-top: 10px;
+    }
+    </style>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-logo">
-            <a href="#"><img src="images/clinic.png"></a>
-        </div>
-            <ul class="nav-link">
-              <li class="link"><a href="{% url 'index' %}">Home</a></li>
-              <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
-              <li class="link"><a href="/">Profile</a></li>
-            <li class="link"><a href="service.html">Service</a></li>
-            <li class="link"><a href="#">About</a></li>
-            <li class="link">
-                <form action="{% url 'download_pdf' %}" method="post"><button class="btn btn-login" type="submit">
+<nav>
+    <div class="nav-logo">
+        <a href="#"><img src="images/clinic.png"></a>
+    </div>
+    <ul class="nav-link">
+        <li class="link"><a href="{% url 'index' %}">Home</a></li>
+        <li class="link"><a href="{% url 'service' %}">Facilities</a></li>
+        <li class="link"><a href="/">Profile</a></li>
+        <li class="link"><a href="service.html">Service</a></li>
+        <li class="link"><a href="#">About</a></li>
+        <li class="link">
+            <form action="{% url 'download_pdf' %}" method="post">
+                <button class="btn btn-login" type="submit">
                     {% csrf_token %}
                     Download as PDF
-                </form></button>
-            </li>
-        </ul>
-        <button class="btn btn-login">Login</button>
-    </nav>
- <br>
+            </form>
+            </button>
+        </li>
+    </ul>
+    <button class="btn btn-login">Login</button>
+</nav>
+<br>
 
- <div class="overlay"></div>
+<div class="overlay"></div>
 
 <div class="loginform">
     <span class="close">&times;</span>
     <form>
-    <div>
-        <label for="">Username</label>
-        <input type="text">
-    </div>
-    <div>
-        <label for="">Password</label>
-        <input type="text">
-    </div>
-    <button style="margin-right: 20px;">Login</button>
+        <div>
+            <label for="">Username</label>
+            <input type="text">
+        </div>
+        <div>
+            <label for="">Password</label>
+            <input type="text">
+        </div>
+        <button style="margin-right: 20px;">Login</button>
     </form>
 </div>
-    <!-- <div class="header">
-  <img src="./images/clinic.png" alt="Aga Khan University Hospital Emblem" style="float: left; margin-right: 40px; height: 70px;">
+<!-- <div class="header">
+<img src="./images/clinic.png" alt="Aga Khan University Hospital Emblem" style="float: left; margin-right: 40px; height: 70px;">
 </div> -->
 
-    <h1>ماعیند مینٹد تھیرپیی </h1>
-    <h1>Mind Mend Therapy Consultancy</h1>
+<h1>ماعیند مینٹد تھیرپیی </h1>
+<h1>Mind Mend Therapy Consultancy</h1>
 
-    <div class="header-info">
-        <p>Stadium Road, P.O. Box 3500.</p>
-        <p>Karachi - 74600, Pakistan</p>
-        <p>Online Medical Services Tel: (021) 090078601</p>
+<div class="header-info">
+    <p>Stadium Road, P.O. Box 3500.</p>
+    <p>Karachi - 74600, Pakistan</p>
+    <p>Online Medical Services Tel: (021) 090078601</p>
+</div>
+
+<div class="patient-info">
+    <p>Medical Record #L21751857 (CM51452202)</p>
+    <p>Patient Name: {{ patient_name }}</p>
+    <p>Age/Gender: {{ patient_age }}Y/ Male</p>
+</div>
+
+<div class="test-results">
+    <table>
+        <tr>
+            <th>Test</th>
+            <th>Current Result</th>
+            <th>Previous Results & Date</th>
+            <th>Unit</th>
+            <th>Ranges</th>
+        </tr>
+        <tr>
+            <td>PLASMA ALCOHOL (ETHANOL)</td>
+            <td>NOT DETECTED</td>
+            <td></td>
+            <td>mg/dl</td>
+            <td>50-100 mg/dl <br> >100 mg/dl</td>
+        </tr>
+    </table>
+
+    <div class="interpretation">
+        <p>{{ latest_feedback.answer1 }} <br> {{ latest_feedback.answer2 }} <br> {{ latest_feedback.answer3 }} <br> {{
+            latest_feedback.answer4 }} <br> {{ latest_feedback.answer5 }}</p>
     </div>
 
-    <div class="patient-info">
-        <p>Medical Record #L21751857 (CM51452202)</p>
-        <p>Patient Name: {{ patient_name }}</p>
-        <p>Age/Gender: {{ patient_age }}Y/ Male</p>
+    <div class="note">
+        <p>{{ latest_feedback.description }}</p>
     </div>
+</div>
 
-    <div class="test-results">
-        <table>
-            <tr>
-                <th>Test</th>
-                <th>Current Result</th>
-                <th>Previous Results & Date</th>
-                <th>Unit</th>
-                <th>Ranges</th>
-            </tr>
-            <tr>
-                <td>PLASMA ALCOHOL (ETHANOL)</td>
-                <td>NOT DETECTED</td>
-                <td></td>
-                <td>mg/dl</td>
-                <td>50-100 mg/dl <br> >100 mg/dl</td>
-            </tr>
-        </table>
-
-        <div class="interpretation">
-            <p>{{ latest_feedback.answer1 }} <br> {{ latest_feedback.answer2 }} <br> {{ latest_feedback.answer3 }} <br> {{ latest_feedback.answer4 }} <br> {{ latest_feedback.answer5 }}</p>
-        </div>
-
-        <div class="note">
-            <p>{{ latest_feedback.description }}</p>
-        </div>
-    </div>
-
-    <br><br><br>
+<br><br><br>
 
 
-
-    <footer class="sec-p1">
-        <div class="c1">
-          <img style="width: 16%;" src="./images/clinic.png" alt="logo">
-          <h3>Contact</h3>
-          <p><Strong>Telephone:</strong>0900-78601</p>
-          <p><strong>Address</strong> Street California , USA</p>
-          <h2>Social Sites</h2>
-          <div class="social">
+<footer class="sec-p1">
+    <div class="c1">
+        <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+        <h3>Contact</h3>
+        <p><Strong>Telephone:</strong>0900-78601</p>
+        <p><strong>Address</strong> Street California , USA</p>
+        <h2>Social Sites</h2>
+        <div class="social">
             <i class="fab fa-facebook"></i>
             <i class="fab fa-instagram"></i>
             <i class="fab fa-twitter"></i>
             <i class="fab fa-youtube"></i>
-          </div>
         </div>
-    
-        <div class="c1">
-          <h3>About</h3>
-          <a href="#">About Us</a>
-          <a href="#">Contact Us</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Rules & Regulations</a>
-        </div>
-    
-        <div class="c1">
-          <h3>My Account</h3>
-          <a href="#">Sign in</a>
-          <a href="#">MyAppointments</a>
-          <a href="#">Help</a>
-        </div>
-      </footer>
+    </div>
+
+    <div class="c1">
+        <h3>About</h3>
+        <a href="#">About Us</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Rules & Regulations</a>
+    </div>
+
+    <div class="c1">
+        <h3>My Account</h3>
+        <a href="#">Sign in</a>
+        <a href="#">MyAppointments</a>
+        <a href="#">Help</a>
+    </div>
+</footer>
 </body>
 <script src="{%static 'app.js'%}"></script>
 </html>
