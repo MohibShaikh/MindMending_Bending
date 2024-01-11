@@ -8,13 +8,10 @@
 </head>
 <body>
     <h1>{% block heading %}Feedback Form{% endblock %}</h1>
-    <form method="post">
-        {% csrf_token %}
-
-        {% block content %}
+    {% block content %}
         {% endblock %}
 
-        <input type="submit" value="Submit">
+
     </form>
 </body>
 </html>
