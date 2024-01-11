@@ -1,31 +1,32 @@
-<!-- therapist_feedback_form.html -->
+<!-- provide_feedback.html -->
 {% extends 'base_feedback_form.html' %}
 
 {% block title %}Therapist Feedback Form{% endblock %}
 {% block heading %}Therapist Feedback Form{% endblock %}
 
 {% block content %}
-  <form method="post">
+
+<form method="post" action="{% url 'provide_feedback' feedback_id=patient_feedback.id %}">
     {% csrf_token %}
+    <label>How would you rate your overall satisfaction with the session?</label>
+    <p>{{ patient_feedback.answer1 }}</p>
 
-    {% for feedback in pending_feedback %}
-      <label for="{{ feedback.id|slugify }}">{{ feedback.question }}</label>
+    <label>What specific aspects of the session did you find most helpful?</label>
+    <p>{{ patient_feedback.answer2 }}</p>
 
-      {% if feedback.options %}
-        <select id="{{ feedback.id|slugify }}" name="answer_{{ feedback.id }}" required>
-          {% for option in feedback.options %}
-            <option value="{{ option }}">{{ option }}</option>
-          {% endfor %}
-        </select><br><br>
-      {% else %}
-        <textarea id="{{ feedback.id|slugify }}" name="answer_{{ feedback.id }}" required></textarea><br><br>
-      {% endif %}
+    <label>Were there any challenges or concerns during the session?</label>
+    <p>{{ patient_feedback.answer3 }}</p>
 
-      <!-- Add a new field for therapist's description -->
-      <label for="description">Therapist's Description:</label><br>
-      <textarea id="description_{{ feedback.id }}" name="description_{{ feedback.id }}" rows="4" cols="50" required></textarea><br><br>
-    {% endfor %}
+    <label>How well did the therapist address your needs and concerns?</label>
+    <p>{{ patient_feedback.answer4 }}</p>
 
-    <input type="submit" value="Submit Feedback">
-  </form>
+    <label>Do you feel more positive or optimistic after the session?</label>
+    <p>{{ patient_feedback.answer5 }}</p>
+
+
+    <label for="therapist_description">Therapist's Description</label>
+    <textarea id="therapist_description" name="therapist_description" required></textarea><br><br>
+
+    <input type="submit" value="Submit">
+</form>
 {% endblock %}

@@ -658,18 +658,20 @@ def provide_feedback(request, feedback_id):
     patient_feedback = get_object_or_404(Feedback, pk=feedback_id, is_viewed=False)
 
     if request.method == 'POST':
-        # Process therapist's feedback
-        description = request.POST.get('description')
-        therapist_feedback = Feedback.objects.create(
-            patient_feedback=patient_feedback,
-            therapist=request.user.therapist,  # Assuming therapist is logged in
-            description=description
-        )
-        therapist_feedback.save()
-        return render(request, 'therapist_feedback.html')
+        therapist_description = request.POST.get('therapist_description')
+
+        # Update the Feedback instance with therapist's description and set is_viewed to True
+        patient_feedback.therapist_description = therapist_description
+        patient_feedback.is_viewed = True
+        patient_feedback.save()
+
+        # Additional logic if needed
+
+        return render(request, '/')  # Redirect to a success page or handle accordingly
 
     context = {'patient_feedback': patient_feedback}
-    return render(request, 'therapist_feedback_form .html', context)
+    return render(request, 'therapist_feedback_form.html', context)
+
 
 def unviewed_feedbacks(request):
     # Assuming the logged-in user is a patient#

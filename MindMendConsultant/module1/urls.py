@@ -16,7 +16,6 @@ urlpatterns = [
     path('training/', views.training, name='training'),
     path('book/<int:therapist_id>/', views.booking, name='book'),
     path('therapist/unviewed-feedbacks/', views.therapist_unviewed_feedbacks, name='therapist_unviewed_feedbacks'),
-    path('therapist/feedback/queue/', views.therapist_feedback_queue, name='therapist_feedback_queue'),
     path('therapist/provide-feedback/<int:feedback_id>/', views.provide_feedback, name='provide_feedback'),
     path('mark-notifications-as-read/', views.mark_notifications_as_read, name='mark_notifications_as_read'),
     # path('feedback-form/', views.feedback_view, name='feedback_form'),
