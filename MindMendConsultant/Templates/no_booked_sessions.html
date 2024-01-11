@@ -1,0 +1,7 @@
+{% extends 'base_404.html' %}
+
+{% block content %}
+    <h1>Error 404</h1>
+    <p>Oops! You don't have any upcoming sessions.</p>
+    <p>Book a <a href="{% url 'index' %}">Session</a> today.</p>
+{% endblock %}

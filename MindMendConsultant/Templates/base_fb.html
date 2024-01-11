@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile page</title>
+    {%load static%}
+<!--    <link rel="stylesheet" href="{% static 'style.css' %}">-->
+<!--    <link rel="stylesheet" href="{% static 'userprofile.css' %}">-->
+    <style>.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feedback-item {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.feedback-item p {
+  margin-bottom: 10px;
+}
+
+.feedback-item button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+<!--.feedback-item button:hover {   -->
+  background-color: #0056b3;
+}
+</style>
+</head>
+<body><!-- unviewed_feedbacks.html -->
+<h1>Unviewed Feedbacks</h1>
+<div class="feedbacks">
+    {% for feedback in unviewed_feedbacks %}
+    <div class="feedback-item">
+        <h4>Therapist: {{ feedback.therapist.user.username }}</h4>
+        <p>Session Type: {{ feedback.booked_session.session_type }}</p>
+        <p>Date: {{ feedback.booked_session.selected_time|date:"d-M-Y" }}</p>
+        <p>Timing: {{ feedback.booked_session.selected_time|time:"h:i" }} - {{
+            feedback.booked_session.selected_time|time:"h:i" }}</p>
+
+        <!-- Button to navigate to the feedback form -->
+        <a href="{% url 'feedback_view' feedback_id=feedback.id %}">
+            <button>Provide Feedback</button>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+</body>
+</html>
