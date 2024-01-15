@@ -8,6 +8,7 @@ class Patient(models.Model):
     dob = models.CharField(max_length=3)
     phone_no = models.CharField(max_length=20)
     age = models.CharField(max_length=3)
+    progress_percentage = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.user.username}"
@@ -50,7 +51,7 @@ class Feedback(models.Model):
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     booked_session = models.ForeignKey(BookedSession, on_delete=models.CASCADE)
-    description = models.TextField(blank=True)
+    description = models.TextField(default='')
     answer1 = models.TextField()
     answer2 = models.TextField()
     answer3 = models.TextField()
@@ -58,6 +59,7 @@ class Feedback(models.Model):
     answer5 = models.TextField()
     is_viewed = models.BooleanField(default=False)
     created_at=models.DateTimeField(default=timezone.now)
+    total_percentage = models.IntegerField(default=0)
 
 
 class Notification(models.Model):

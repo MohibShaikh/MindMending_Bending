@@ -5,37 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile page</title>
     {%load static%}
-<!--    <link rel="stylesheet" href="{% static 'style.css' %}">-->
-<!--    <link rel="stylesheet" href="{% static 'userprofile.css' %}">-->
+    <!--    <link rel="stylesheet" href="{% static 'style.css' %}">-->
+    <!--    <link rel="stylesheet" href="{% static 'userprofile.css' %}">-->
     <style>.feedback-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
+progress {padding-bottom:20px;
+padding-top:10px;
+color:#FF0000}
+        .percentage-bar {
+            width: 100%;
+            height: 20px;
+            background-color: blue;
+            border-radius: 5px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
 
-.feedback-item {
-  background-color: #f2f2f2;
-  padding: 20px;
-  border-radius: 5px;
-}
+        .progress {
+            height: 100%;
+            background-color: #4caf50;
+            border-radius: 5px;
+            position: relative;
+            transition: width 1s ease-in-out;
+        }
+body{font-family:Verdana;}
+        .percentage-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fffff;
+            font-weight: bold;
+        }
 
-.feedback-item p {
-  margin-bottom: 10px;
-}
+        .feedback-item {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+        }
 
-.feedback-item button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+        .feedback-item p {
+            margin-bottom: 10px;
+        }
+
+        .feedback-item button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
 <!--.feedback-item button:hover {   -->
   background-color: #0056b3;
 }
-</style>
+    </style>
 </head>
 <body><!-- unviewed_feedbacks.html -->
 <h1>Unviewed Feedbacks</h1>
@@ -47,7 +75,14 @@
         <p>Date: {{ feedback.booked_session.selected_time|date:"d-M-Y" }}</p>
         <p>Timing: {{ feedback.booked_session.selected_time|time:"h:i" }} - {{
             feedback.booked_session.selected_time|time:"h:i" }}</p>
-
+        Therapy Progress: {{ feedback.total_percentage }}%<br>
+        <!--        <div class="percentage-bar">-->
+        <!--            <div class="progress" style="width: {{ feedback.total_percentage }}%;">-->
+        <!--                <span class="percentage-text">{{ feedback.total_percentage }}%</span>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <progress value="{{ feedback.total_percentage }}" min="0" max="100">75%</progress>
+        <br>
         <!-- Button to navigate to the feedback form -->
         <a href="{% url 'feedback_view' feedback_id=feedback.id %}">
             <button>Provide Feedback</button>

@@ -74,13 +74,22 @@ WSGI_APPLICATION = "MindMendConsultant.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / "db.sqlite3",
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'defaultdb',
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_mZw0SUZxCYZ74s-SzNV',
+        'HOST': 'pg-f4a890e-mmdb.a.aivencloud.com',
+        'PORT': '13377'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -134,3 +143,11 @@ DEFAULT_FROM_EMAIL = 'MindMend'
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'teamMindMend@gmail.com'
 EMAIL_HOST_PASSWORD = 'opon hyvu jmdu buec'
+
+# Celery configuration
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'

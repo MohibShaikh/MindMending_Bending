@@ -885,7 +885,7 @@
 
     /* long banner */
     /* #sale1 {
-      background-image: url(./images/brain4.webp);
+      background-image: url({% static 'images/brain4.webp' %});
       width: 100%;
       height: 40vh;
       border: 1px solid;
@@ -977,7 +977,7 @@
 
 <nav>
     <div class="nav-logo">
-        <a href="#"><img src="images/clinic.png"></a>
+        <a href="#"><img src="{% static 'images/clinic.png' %}"></a>
     </div>
     <ul class="nav-link">
         <li class="link"><a href="{% url 'index' %}">Home</a></li>
@@ -1066,7 +1066,7 @@
 
 <footer class="sec-p1">
     <div class="c1">
-        <img style="width: 16%;" src="./images/clinic.png" alt="logo">
+        <img style="width: 16%;" src="{% static 'images/clinic.png' %}" alt="logo">
         <h3>Contact</h3>
         <p><Strong>Telephone:</strong>0900-78601</p>
         <p><strong>Address</strong> Street California , USA</p>

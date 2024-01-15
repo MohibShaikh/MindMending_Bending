@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils import timezone
+from django.db.models import Q
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -14,6 +15,8 @@ from .models import Patient, Therapist, Sessions, BookedSession, Notification, F
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
+from .tasks import create_feedback
+
 
 # Create your views here.
 def index(request):
@@ -146,7 +149,6 @@ def booking(request, therapist_id):
             content=f"New session booked by patient {patient.user.username},/n on {selected_time}."
         )
 
-
         # Create a notification for the patient (optional)
         patient_notification = Notification.objects.create(
             user=patient.user,
@@ -167,6 +169,30 @@ def booking(request, therapist_id):
         therapist.save()
         patient_notification.save()
         therapist_notification.save()
+        feedback = Feedback.objects.create(
+            therapist=therapist,
+            patient=patient,
+            booked_session=booked_session,
+            description=f"Feedback for session with {therapist.user.username}",
+            answer1="",
+            answer2="",
+            answer3="",
+            answer4="",
+            answer5="",
+            total_percentage=0,
+            created_at=timezone.now(),
+        )
+        feedback.save()
+        # result = create_feedback.apply_async(
+        #     args=[therapist_id, patient.id, booked_session.id],
+        #     countdown=10
+        # )
+        #
+        # Wait for the result and get the outcome
+        # feedback_result = result.get()
+        # print(f"Feedback task result: {feedback_result}")
+        # print()
+        print('happened')
         # Send email notifications
         send_email_to_therapist(therapist, booked_session, selected_time_str=selected_time)
         send_email_to_patient(patient, booked_session, selected_time_str=selected_time)
@@ -212,6 +238,16 @@ def send_email_to_patient(patient, booked_session, selected_time_str):
     selected_time = selected_time_str
     subject = 'Session Booked Confirmation'
     message = f"Dear {patient.user.username},\n\nYour session has been booked successfully.\n\nTherapist: {booked_session.therapist.user.username}\nDate: {selected_time.strftime('%d-%b-%Y')}\n\nTiming: {booked_session.selected_time.strftime('%H:%M')} - {selected_time.strftime('%H:%M')}\n\nThank you for choosing our service!"
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_email = patient.user.email
+
+    send_mail(subject, message, from_email, [to_email])
+
+
+def send_registration_confirmation_email(patient, subject, message):
+    """
+    Sends a registration confirmation email to the patient.
+    """
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = patient.user.email
 
@@ -312,8 +348,8 @@ def register_patient(request):
         age = request.POST['age']
         phone_no = request.POST['phone_no']
         print(f'Extracted Date: {dob}')
+        selected_time = timezone.now()
         password = request.POST['password']
-        message = 'We thank you for choosing us. Welcome onboard your ever betterment journey of mental health.'
         # Create a User
         user = User.objects.create_user(username=username, email=email, password=password)
         print(user.username, user.email, user.password)
@@ -321,7 +357,12 @@ def register_patient(request):
         patient = Patient(user=user, gender=gender, dob=dob, age=age, phone_no=phone_no)
         print(patient.gender, patient.dob)
         patient.save()
-        send_email_to_patient('MindMend Consultant', message, [email], fail_silently=False)
+        subject = 'Registration Confirmation'
+        message = f"Dear {patient.user.username},\n\nThank you for registering with MindMend Consultant. Welcome to our community!\n\n"
+        message += "We look forward to helping you on your journey to better mental health.\n\n"
+        message += "If you have any questions or need assistance, feel free to contact us.\n\n"
+        message += "Best regards,\nMindMend Consultant"
+        send_registration_confirmation_email(patient, subject, message)
 
         # Redirect to a success page or login page
         return redirect('service')
@@ -565,6 +606,33 @@ def feedback_form_view(request):
 
                 # print(answer1, answer2, answer3, answer4, answer5)
                 # print(request.POST)
+                percentage_mapping = {
+                    'Excellent': 20,
+                    'Good': 15,
+                    'Average': 10,
+                    'Poor': 5,
+                    'Yes': 20,
+                    'No': 10,
+                    'Positive': 30,
+                    'Optimistic': 20,
+                }
+                total_percentage = (
+                        percentage_mapping.get(answer1, 0) +
+                        percentage_mapping.get(answer2, 0) +
+                        percentage_mapping.get(answer3, 0) +
+                        percentage_mapping.get(answer4, 0) +
+                        percentage_mapping.get(answer5, 0)
+                )
+                # Before incrementing
+                print(f"Initial progress_percentage: {patient.progress_percentage}")
+
+                # Increment based on total_percentage
+                patient.progress_percentage += total_percentage
+                patient.save()
+
+                # After incrementing
+                print(f"Final progress_percentage: {patient.progress_percentage}")
+                patient.save()
                 # Create a Feedback instance and save it
                 Feedback.objects.create(
                     therapist_id=therapist_id,
@@ -575,7 +643,10 @@ def feedback_form_view(request):
                     answer3=answer3,
                     answer4=answer4,
                     answer5=answer5,
+                    is_viewed=False,
+                    total_percentage=total_percentage
                 )
+
                 # Redirect to some success page or handle the queuing logic
                 therapist_notification = Notification.objects.create(
                     user=earliest_session.therapist.user,
@@ -628,7 +699,7 @@ def feedback_form_view(request):
 
 
 @require_POST
-def cancel_booking(request,booked_session_id):
+def cancel_booking(request, booked_session_id):
     booking_id = request.POST.get('booking_id')
 
     try:
@@ -650,12 +721,15 @@ def cancel_booking(request,booked_session_id):
 
     # Handle other exceptions or errors as needed
     return render(request, 'error_404.html')
+
+
 def therapist_feedback_queue(request):
     # Get all patient feedback forms that haven't been viewed by therapists
     pending_feedback = Feedback.objects.filter(is_viewed=False)
 
     context = {'pending_feedback': pending_feedback}
     return render(request, 'therapist_feedback_form.html', context)
+
 
 def provide_feedback(request, feedback_id):
     patient_feedback = get_object_or_404(Feedback, pk=feedback_id, is_viewed=False)
@@ -670,21 +744,63 @@ def provide_feedback(request, feedback_id):
 
         # Additional logic if needed
 
-        return render(request, '/')  # Redirect to a success page or handle accordingly
+        return render(request, 'sessions.html')  # Redirect to a success page or handle accordingly
 
     context = {'patient_feedback': patient_feedback}
+
     return render(request, 'therapist_feedback_form.html', context)
 
 
+# def unviewed_feedbacks(request):
+#     # Assuming the logged-in user is a patient#
+#     patient = request.user.patient
+#
+#     # Get unviewed feedbacks for the patient
+#     unviewed_feedbacks = Feedback.objects.filter(patient=patient, is_viewed=False)
+#
+#     context = {'unviewed_feedbacks': unviewed_feedbacks}
+#     return render(request, 'base_fb.html', context)
+
+
 def unviewed_feedbacks(request):
-    # Assuming the logged-in user is a patient#
+    # Assuming the logged-in user is a patient
     patient = request.user.patient
 
-    # Get unviewed feedbacks for the patient
+    # Get feedbacks with total_percentage < 0 and is_viewed=True
+    feedbacks_to_create = Feedback.objects.filter(
+        Q(patient=patient, total_percentage__lt=100, is_viewed=False) &
+        (Q(answer1='') | Q(answer1__isnull=True)) &
+        (Q(answer2='') | Q(answer2__isnull=True)) &
+        (Q(answer3='') | Q(answer3__isnull=True))
+    )
+
+    # Create new feedback objects with desired values
+    for feedback_to_create in feedbacks_to_create:
+        # Customize the feedback values based on your requirements
+        new_feedback = Feedback.objects.create(
+            therapist=feedback_to_create.therapist,
+            patient=feedback_to_create.patient,
+            booked_session=feedback_to_create.booked_session,
+            description=f"Feedback for session with {feedback_to_create.therapist.user.username}",
+            answer1="",  # Add your fields here
+            answer2="",  # Add your fields here
+            answer3="",  # Add your fields here
+            answer4="",  # Add your fields here
+            answer5="",  # Add your fields here
+            total_percentage=0,
+            created_at=feedback_to_create.created_at,
+            is_viewed=False  # Set is_viewed to False for the new feedback
+        )
+
+        # Save the new feedback
+        new_feedback.save()
+
+    # Get updated unviewed feedbacks for the patient
     unviewed_feedbacks = Feedback.objects.filter(patient=patient, is_viewed=False)
 
     context = {'unviewed_feedbacks': unviewed_feedbacks}
     return render(request, 'base_fb.html', context)
+
 
 def therapist_unviewed_feedbacks(request):
     # Assuming the logged-in user is a therapist
@@ -695,6 +811,7 @@ def therapist_unviewed_feedbacks(request):
 
     context = {'unviewed_feedbacks': unviewed_feedbacks}
     return render(request, 'therapist_unviewed_feedbacks.html', context)
+
 
 def feedback_view(request, feedback_id):
     # Get the feedback object
@@ -710,21 +827,34 @@ def feedback_view(request, feedback_id):
         answer3 = request.POST.get('answer3')
         answer4 = request.POST.get('answer4')
         answer5 = request.POST.get('answer5')
+        percentages = {
+            'Excellent': 10,
+            'Good': 15,
+            'Average': 10,
+            'Poor':5,
+            "Therapist's Approach":20,
+            # Define percentages for other options as needed
+        }
+        # Calculate percentages for each answer
+        percentage1 = percentages.get(answer1, 1)  # Default to 0 if answer is not in the dictionary
+        percentage2 = percentages.get(answer2, 0)
+        percentage3 = percentages.get(answer3, 0)
+        percentage4 = percentages.get(answer4, 0)
+        percentage5 = percentages.get(answer5, 5)
 
+        # Calculate the total percentage based on answers
+        total_percentage = (percentage1 + percentage2 + percentage3 + percentage4 + percentage5) / 5
         # print(answer1, answer2, answer3, answer4, answer5)
         # print(request.POST)
         # Create a Feedback instance and save it
-        Feedback.objects.create(
-            therapist_id=therapist_id,
-            booked_session=booked_session,
-            description='',
-            patient=patient,
-            answer1=answer1,
-            answer2=answer2,
-            answer3=answer3,
-            answer4=answer4,
-            answer5=answer5,
-        )
+        feedback.answer1 = answer1
+        feedback.answer2 = answer2
+        feedback.answer3 = answer3
+        feedback.answer4 = answer4
+        feedback.answer5 = answer5
+        feedback.total_percentage = total_percentage
+        feedback.save()
+        print(total_percentage)
         # Redirect to some success page or handle the queuing logic
         therapist_notification = Notification.objects.create(
             user=booked_session.therapist.user,
@@ -776,6 +906,7 @@ def view_report(request):
 
     context = {'latest_feedback': latest_feedback}
     return render(request, 'gen_report.html', context)
+
 
 def download_pdf(request):
     template_path = 'gen_report.html'

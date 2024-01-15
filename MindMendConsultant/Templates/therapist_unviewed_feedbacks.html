@@ -42,7 +42,7 @@
 <div class="feedbacks">
     {% for feedback in unviewed_feedbacks %}
     <div class="feedback-item">
-        <h4>Therapist: {{ feedback.patient.user.username }}</h4>
+        <h4>Patient: {{ feedback.patient.user.username }}</h4>
         <p>Session Type: {{ feedback.booked_session.session_type }}</p>
         <p>Date: {{ feedback.booked_session.selected_time|date:"d-M-Y" }}</p>
         <p>Timing: {{ feedback.booked_session.selected_time|time:"h:i" }} - {{
