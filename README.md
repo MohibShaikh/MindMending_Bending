@@ -1,0 +1,1 @@
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/MohibShaikh/MindMending_Bending?utm_source=oss&utm_medium=github&utm_campaign=MohibShaikh%2FMindMending_Bending&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
